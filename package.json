@@ -1,0 +1,16 @@
+{
+  "name": "doo",
+  "version": "1.0.0",
+  "description": "Repositório para o projeto da disciplina \"Princípios de Desenvolvimento Web\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
