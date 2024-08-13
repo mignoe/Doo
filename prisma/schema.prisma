@@ -30,15 +30,13 @@ model Session {
 model Project {
   id String @id @default(uuid())
   name String
-  adminId String 
   users User[] @relation("ProjectUser")
   admins User[] @relation("ProjectAdmin")
 }
 
 model User {
   id String @id @default(uuid())
-  email String @unique
-  name String
+  name String @unique
   password String
   projects Project[] @relation("ProjectUser")
   projectAdmins Project[] @relation("ProjectAdmin")
