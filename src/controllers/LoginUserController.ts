@@ -1,33 +1,26 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 
-export class CreateUserController {
+export class LoginUserController {
     async handle(request: Request, response: Response){
 
         const { name, password } = request.body
 
         const prismaClient = new PrismaClient()
-        
+
         // autentifica o usuário
         const existingUser = await prismaClient.user.findFirst({
             where: {
-            name: name
+            name: name,
+            password: password
             }
         })
 
         if (existingUser) {
             // User already exists
-            return response.status(409).json({ error: 'User already exists' })
+            return response.status(200).json(existingUser)
         }
 
-
-        const user =  await prismaClient.user.create({
-            data: {
-                name,
-                password
-            }
-        })
-
-        return response.json(user)
-    }    
+        return response.status(404).json({ error: 'User not found' })
+    }
 }

@@ -12,3 +12,6 @@ app.use(userRoutes_1.userRoutes);
 app.get('/', (request, response) => {
     return response.json({ message: 'Hello World' });
 });
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

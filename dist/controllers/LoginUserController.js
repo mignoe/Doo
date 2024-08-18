@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserController = void 0;
+exports.LoginUserController = void 0;
 const client_1 = require("@prisma/client");
-class CreateUserController {
+class LoginUserController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, password } = request.body;
@@ -19,21 +19,16 @@ class CreateUserController {
             // autentifica o usuário
             const existingUser = yield prismaClient.user.findFirst({
                 where: {
-                    name: name
+                    name: name,
+                    password: password
                 }
             });
             if (existingUser) {
                 // User already exists
-                return response.status(409).json({ error: 'User already exists' });
+                return response.status(200).json(existingUser);
             }
-            const user = yield prismaClient.user.create({
-                data: {
-                    name,
-                    password
-                }
-            });
-            return response.json(user);
+            return response.status(404).json({ error: 'User not found' });
         });
     }
 }
-exports.CreateUserController = CreateUserController;
+exports.LoginUserController = LoginUserController;
