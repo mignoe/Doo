@@ -20,13 +20,16 @@ export class CreateUserController {
             return response.status(409).json({ error: 'User already exists' })
         }
 
-        const project =  await prismaClient.project.create({
+        let name = userName;
+        let password = userPassword;
+
+        const user =  await prismaClient.user.create({
             data: {
-                name: userName,
-                
+                name,
+                password
             }
         })
 
-        return response.json(book)
+        return response.json(user)
     }    
 }
