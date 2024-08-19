@@ -1,28 +1,30 @@
-// import { Request, Response } from 'express'
-// import { PrismaClient } from '@prisma/client'
+import { Request, Response } from 'express'
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-// export class CreateBookController {
-//     async handle(request: Request, response: Response){
+// Create a new project
+export class CreateProjectController {
+    async handle(request: Request, response: Response) {
 
-//         const { userName, userPassword, projectName } = request.body
-
-//         const prismaClient = new PrismaClient()
+        const { name, users, admins } = request.body;
         
-//         // autentifica o usuário
-//         const user = await prismaClient.user.findFirst({
-//             where: {
-//                 name: userName,
-//                 password: userPassword
-//             }
-//         })
+        const project = await prisma.project.create({
+            data: {
+                name,
+                users: {
+                    connect: users.map((userId : string) => ({ id: userId })),
+                },
+                admins: {
+                    connect: admins.map((adminId : string) => ({ id: adminId })),
+                },
+            },
+        });
 
-//         const project =  await prismaClient.project.create({
-//             data: {
-//                 gprojectName,
-                
-//             }
-//         })
+        if (!project) {
+            return response.status(404).json({ error: 'Project not found' });
+        }
 
-//         return response.json(book)
-//     }    
-// }
+        return response.status(201).json(project);
+
+    }
+}

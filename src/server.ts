@@ -1,11 +1,13 @@
 import express, { Request, Response } from 'express';
 import { userRoutes } from './routes/userRoutes';
+import { projectRoutes } from './routes/proejctRoutes';
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(userRoutes);
+app.use(projectRoutes);
 
 app.get('/', (request: Request, response: Response) => {
   return response.json({ message: 'Hello World' });
