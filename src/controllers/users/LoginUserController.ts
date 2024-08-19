@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 
-export class CreateUserController {
+export class LoginUserController {
     async handle(request: Request, response: Response){
 
         const { userName, userPassword } = request.body
@@ -18,7 +18,7 @@ export class CreateUserController {
 
         if (existingUser) {
             // User already exists
-            return response.status(409).json({ error: 'User already exists' })
+            return response.status(200)
         }
 
         // User already exists
