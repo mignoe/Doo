@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { CreateProjectController } from '../controllers/project/CreateProjectController';
-import { GetUserProjectsController } from '../controllers/project/GetUserProjectsController';
+import { GetProjectsByUser } from '../controllers/project/GetProjectsByUserController';
 
 const projectRoutes = Router();
 
-projectRoutes.post('/projects', new CreateProjectController().handle);
-projectRoutes.get('/userProjects', new GetUserProjectsController().handle);
+projectRoutes.post('/projects/create', new CreateProjectController().handle);
+projectRoutes.get('/projects/getProjectsByUser', new GetProjectsByUser().handle);
 
 
 export { projectRoutes };

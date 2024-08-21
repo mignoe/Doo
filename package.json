@@ -29,7 +29,7 @@
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
     "prettier": "^3.3.3",
-    "prisma": "^5.17.0",
+    "prisma": "^5.18.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   }

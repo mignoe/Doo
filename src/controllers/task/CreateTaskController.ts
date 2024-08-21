@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { PrismaClient, Project, User, Session } from '@prisma/client';
 
+import { GetSessionService } from '../../services/GetSessionService';
 import { UserAuthenticator } from '../../services/UserAuthenticator';
 
-import { GetSessionService } from '../../services/GetSessionService';
 
 
 const prisma = new PrismaClient();

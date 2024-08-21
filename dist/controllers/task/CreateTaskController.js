@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateTaskController = void 0;
 const client_1 = require("@prisma/client");
-const UserAuthenticator_1 = require("../../services/UserAuthenticator");
 const GetSessionService_1 = require("../../services/GetSessionService");
+const UserAuthenticator_1 = require("../../services/UserAuthenticator");
 const prisma = new client_1.PrismaClient();
 const userAuthenticator = new UserAuthenticator_1.UserAuthenticator();
 const getSessionService = new GetSessionService_1.GetSessionService();
@@ -20,12 +20,11 @@ class CreateTaskController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { sessionId, userName, userPassword, taskName, taskContent } = request.body;
-            const user = userAuthenticator.authenticate(userName, userPassword);
-            ;
+            //const user = userAuthenticator.authenticate(userName, userPassword) as User | null;;
             // Step 2: Check if the user exists 
-            if (!user) {
-                return response.status(401).json({ error: 'User not found' });
-            }
+            //if (!user) {
+            //    return response.status(401).json({ error: 'User not found' });
+            //} 
             // Step 1: Find the user by username
             const session = prisma.session.findUnique({
                 where: { id: sessionId },

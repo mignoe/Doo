@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export class GetUserProjectsController {
+export class GetProjectsByUser {
     async handle(request: Request, response: Response) {
         const { name, password } = request.body;
 
