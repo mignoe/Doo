@@ -14,8 +14,11 @@ datasource db {
 }
 
 model Task {
-  id String @id @default(uuid())
+  id String @id @default(uuid()) 
+
   sessionId String
+  session Session @relation(fields: [sessionId], references: [id], name: "TaskSession")
+
   name String
   content String
   isComplete Boolean
@@ -24,12 +27,20 @@ model Task {
 model Session {
   id String @id @default(uuid())
   name String
+
+  tasks Task[] @relation(name: "TaskSession")
+  
   ProjectId String
+  
+  // Relation with Project
+  project Project @relation(fields: [ProjectId], references: [id], name: "SessionProject")
 }
 
 model Project {
   id String @id @default(uuid())
   name String
+  
+  sessions Session[] @relation(name: "SessionProject")
   users User[] @relation("ProjectUser")
   admins User[] @relation("ProjectAdmin")
 }

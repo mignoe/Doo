@@ -40,6 +40,16 @@ export class CreateTaskController {
             },
         });
 
+        // Step 4: Add the task to the session
+        const updatedSession = await prisma.session.update({
+            where: { id: sessionId },
+            data: {
+                tasks: {
+                    connect: { id: newTask.id },
+                },
+            },
+        });
+
         return response.status(200).json(newTask);
         
     }
