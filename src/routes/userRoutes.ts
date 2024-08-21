@@ -5,7 +5,7 @@ import { LoginUserController } from '../controllers/user/LoginUserController';
 const userRoutes = Router();
 
 
-userRoutes.post('/users', new CreateUserController().handle);
+userRoutes.post('/sign-up', new CreateUserController().handle);
 userRoutes.get('/login', new LoginUserController().handle);
 
 export { userRoutes };

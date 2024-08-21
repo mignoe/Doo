@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient, Project, User } from '@prisma/client';
+import { PrismaClient, Project, User, Session } from '@prisma/client';
 
 import { UserAuthenticator } from '../../services/UserAuthenticator';
 
@@ -14,12 +14,12 @@ export class CreateTaskController {
     async handle(request: Request, response: Response) {
         const { sessionId, userName, userPassword, taskName, taskContent} = request.body;
         
-        const user = userAuthenticator.authenticate(userName, userPassword) as User | null;;
+        //const user = userAuthenticator.authenticate(userName, userPassword) as User | null;;
 
         // Step 2: Check if the user exists 
-        if (!user) {
-            return response.status(401).json({ error: 'User not found' });
-        } 
+        //if (!user) {
+        //    return response.status(401).json({ error: 'User not found' });
+        //} 
 
         // Step 1: Find the user by username
         const session = prisma.session.findUnique({
@@ -33,20 +33,10 @@ export class CreateTaskController {
         // Step 3: Create a new task
         const newTask = await prisma.task.create({
             data: {
-                sessionId: sessionId,
+                sessionId: sessionId,  // Associate the task with the session
                 name: taskName,
                 content: taskContent, 
                 isComplete: false,
-            },
-        });
-
-        // Step 4: Add the task to the session
-        const updatedSession = await prisma.session.update({
-            where: { id: sessionId },
-            data: {
-                tasks: {
-                    connect: { id: newTask.id },
-                },
             },
         });
 

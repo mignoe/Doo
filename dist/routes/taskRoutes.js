@@ -1,1 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.taskRoutes = void 0;
+const express_1 = require("express");
+const CreateTaskController_1 = require("../controllers/task/CreateTaskController");
+const CompleteTaskController_1 = require("../controllers/task/CompleteTaskController");
+const taskRoutes = (0, express_1.Router)();
+exports.taskRoutes = taskRoutes;
+const createTaskController = new CreateTaskController_1.CreateTaskController();
+const completeTaskController = new CompleteTaskController_1.CompleteTaskController();
+taskRoutes.post('/task/create', createTaskController.handle);
+taskRoutes.post('/task/complete', completeTaskController.handle);
