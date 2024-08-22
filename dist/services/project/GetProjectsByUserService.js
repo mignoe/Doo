@@ -9,21 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserController = void 0;
-const CreateUserService_1 = require("../../services/user/CreateUserService");
-class CreateUserController {
-    handle(request, response) {
+exports.GetProjectsByUserService = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+class GetProjectsByUserService {
+    execute(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, password } = request.body;
-            const createUserService = new CreateUserService_1.CreateUserService();
-            try {
-                const user = yield createUserService.execute(name, password);
-                return response.status(201).json(user);
-            }
-            catch (error) {
-                return response.status(409).json({ error: error });
-            }
+            return yield prisma.project.findMany({
+                where: {
+                    OR: [
+                        { users: { some: { id: userId } } },
+                        { admins: { some: { id: userId } } },
+                    ],
+                },
+                include: {
+                    users: true,
+                    admins: true,
+                },
+            });
         });
     }
 }
-exports.CreateUserController = CreateUserController;
+exports.GetProjectsByUserService = GetProjectsByUserService;

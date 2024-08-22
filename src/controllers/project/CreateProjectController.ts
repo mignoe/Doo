@@ -1,30 +1,17 @@
-import { Request, Response } from 'express'
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+// CreateProjectController.ts
+import { Request, Response } from 'express';
+import { CreateProjectService } from '../../services/project/CreateProjectService';
 
-// Create a new project
 export class CreateProjectController {
     async handle(request: Request, response: Response) {
-
         const { name, users, admins } = request.body;
-        
-        const project = await prisma.project.create({
-            data: {
-                name,
-                users: {
-                    connect: users.map((userId : string) => ({ id: userId })),
-                },
-                admins: {
-                    connect: admins.map((adminId : string) => ({ id: adminId })),
-                },
-            },
-        });
+        const createProjectService = new CreateProjectService();
 
-        if (!project) {
-            return response.status(404).json({ error: 'Project not found' });
+        try {
+            const project = await createProjectService.execute(name, users, admins);
+            return response.status(201).json(project);
+        } catch (error) {
+            return response.status(500).json({ message: 'Error creating project', error: error});
         }
-
-        return response.status(201).json(project);
-
     }
 }

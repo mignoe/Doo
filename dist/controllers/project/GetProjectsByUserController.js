@@ -9,36 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetProjectsByUser = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
-class GetProjectsByUser {
+exports.GetProjectsByUserController = void 0;
+const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
+const GetProjectsByUserService_1 = require("../../services/project/GetProjectsByUserService");
+class GetProjectsByUserController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, password } = request.body;
-            // Step 1: Find the user by username
-            const user = yield prisma.user.findUnique({
-                where: { name },
-            });
-            // Step 2: Check if the user exists and the password matches
-            if (!user || user.password !== password) {
-                return response.status(401).json({ error: 'Invalid username or password' });
+            const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
+            const getProjectsByUserService = new GetProjectsByUserService_1.GetProjectsByUserService();
+            try {
+                const user = yield authenticateUserService.execute(name, password);
+                const projects = yield getProjectsByUserService.execute(user.id);
+                return response.status(200).json(projects);
             }
-            // Step 3: Fetch all projects associated with the authenticated user
-            const projects = yield prisma.project.findMany({
-                where: {
-                    OR: [
-                        { users: { some: { id: user.id } } },
-                        { admins: { some: { id: user.id } } },
-                    ],
-                },
-                include: {
-                    users: true,
-                    admins: true,
-                },
-            });
-            return response.status(200).json(projects);
+            catch (error) {
+                return response.status(401).json({ error: error });
+            }
         });
     }
 }
-exports.GetProjectsByUser = GetProjectsByUser;
+exports.GetProjectsByUserController = GetProjectsByUserController;

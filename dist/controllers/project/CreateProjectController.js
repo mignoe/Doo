@@ -10,28 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProjectController = void 0;
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-// Create a new project
+const CreateProjectService_1 = require("../../services/project/CreateProjectService");
 class CreateProjectController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, users, admins } = request.body;
-            const project = yield prisma.project.create({
-                data: {
-                    name,
-                    users: {
-                        connect: users.map((userId) => ({ id: userId })),
-                    },
-                    admins: {
-                        connect: admins.map((adminId) => ({ id: adminId })),
-                    },
-                },
-            });
-            if (!project) {
-                return response.status(404).json({ error: 'Project not found' });
+            const createProjectService = new CreateProjectService_1.CreateProjectService();
+            try {
+                const project = yield createProjectService.execute(name, users, admins);
+                return response.status(201).json(project);
             }
-            return response.status(201).json(project);
+            catch (error) {
+                return response.status(500).json({ message: 'Error creating project', error: error });
+            }
         });
     }
 }
