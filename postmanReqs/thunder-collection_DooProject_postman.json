@@ -1,0 +1,140 @@
+{
+    "info": {
+        "_postman_id": "be055870-02d3-4c38-9e5d-9f1989c28d83",
+        "name": "DooProject",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "CreateProject",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:3000/projects/create",
+                    "path": [
+                        "projects",
+                        "create"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Projeto legal\",\n  \"users\": [],\n  \"admins\": [\"4fa3cd76-8f9d-4f26-964d-e5f87e62ca4a\"]\n}"
+                }
+            }
+        },
+        {
+            "name": "GetUserProjects",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:3000/projects/getProjectsByUser",
+                    "path": [
+                        "projects",
+                        "getProjectsByUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"miguel\",\n  \"password\": \"123\"  \n}"
+                }
+            }
+        },
+        {
+            "name": "addUser",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/projects/addUser",
+                    "path": [
+                        "projects",
+                        "addUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"\",  \n  \"name\": \"miguel\",\n  \"password\": \"123\",\n  \"userId\": \"\"\n}"
+                }
+            }
+        },
+        {
+            "name": "DELETE /project/removeUser",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "localhost:3000/projects/removeUser",
+                    "path": [
+                        "projects",
+                        "removeUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"\",  \n  \"name\": \"miguel\",\n  \"password\": \"123\",\n  \"userId\": \"\"\n}"
+                }
+            }
+        },
+        {
+            "name": "addAdmin",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/projects/addAdmin",
+                    "path": [
+                        "projects",
+                        "addAdmin"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"\",  \n  \"name\": \"miguel\",\n  \"password\": \"123\",\n  \"userId\": \"\"\n}"
+                }
+            }
+        }
+    ]
+}
