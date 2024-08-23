@@ -1,0 +1,140 @@
+{
+    "info": {
+        "_postman_id": "b264b25b-2cde-41d1-87a6-70721ffc417b",
+        "name": "ProjectTests",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "CreateProject",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:3000/projects/create",
+                    "path": [
+                        "projects",
+                        "create"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Projeto teste base\",\n  \"users\": [],\n  \"admins\": [\"5fdccbb5-9912-4531-9f31-dd1df17446d4\"]\n}"
+                }
+            }
+        },
+        {
+            "name": "GetUserProjects",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:3000/projects/getProjectsByUser",
+                    "path": [
+                        "projects",
+                        "getProjectsByUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Michael Jackson\",\n  \"password\": \"123\"  \n}"
+                }
+            }
+        },
+        {
+            "name": "addUser",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/projects/addUser",
+                    "path": [
+                        "projects",
+                        "addUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"b8b0b973-fa51-49f0-8d24-ae521823bc60\",  \n  \"adminName\": \"miguel\",\n  \"adminPassword\": \"123\",\n  \"newUserName\": \"Michael Jackson\"\n}"
+                }
+            }
+        },
+        {
+            "name": "DELETE /project/removeUser",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/projects/removeUser",
+                    "path": [
+                        "projects",
+                        "removeUser"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"597cf084-a306-4626-b2b9-b97803506cfa\",  \n  \"adminName\": \"miguel\",\n  \"adminPassword\": \"123\",\n  \"userId\": \"42532215-ae2c-4515-8f06-bd92f70c0a36\"\n}"
+                }
+            }
+        },
+        {
+            "name": "addAdmin",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/projects/addAdmin",
+                    "path": [
+                        "projects",
+                        "addAdmin"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"b8b0b973-fa51-49f0-8d24-ae521823bc60\",  \n  \"adminName\": \"miguel\",\n  \"adminPassword\": \"123\",\n  \"newAdminName\": \"admin\"\n}"
+                }
+            }
+        }
+    ]
+}

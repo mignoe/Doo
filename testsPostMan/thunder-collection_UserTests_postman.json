@@ -1,0 +1,60 @@
+{
+    "info": {
+        "_postman_id": "a20e2f09-6565-4405-a559-e8ac38e4df66",
+        "name": "UserTests",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "CreateUSer",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:3000/sign-up",
+                    "path": [
+                        "sign-up"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"admin\",\n  \"password\": \"123\"\n}"
+                }
+            }
+        },
+        {
+            "name": "LoginUser",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:3000/login",
+                    "path": [
+                        "login"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Michael Jackson\",\n  \"password\": \"123\"\n}"
+                }
+            }
+        }
+    ]
+}
