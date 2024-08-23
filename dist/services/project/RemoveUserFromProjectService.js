@@ -13,13 +13,13 @@ exports.RemoveUserFromProjectService = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class RemoveUserFromProjectService {
-    execute(userId, projectId) {
+    execute(userName, projectId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield prisma.project.update({
                 where: { id: projectId },
                 data: {
                     users: {
-                        disconnect: { id: userId },
+                        disconnect: { name: userName },
                     },
                 },
             });

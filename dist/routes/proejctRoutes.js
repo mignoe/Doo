@@ -12,5 +12,5 @@ exports.projectRoutes = projectRoutes;
 projectRoutes.post('/projects/create', new CreateProjectController_1.CreateProjectController().handle);
 projectRoutes.get('/projects/getProjectsByUser', new GetProjectsByUserController_1.GetProjectsByUserController().handle);
 projectRoutes.patch('/projects/addAdmin', new AddAdminToProjectController_1.AddAdminToProjectController().handle);
-projectRoutes.patch('/projects/removeUser', new RemoveUserFromProjectController_1.RemoveUserFromProjectController().handle);
+projectRoutes.delete('/projects/removeUser', new RemoveUserFromProjectController_1.RemoveUserFromProjectController().handle);
 projectRoutes.patch('/projects/addUser', new AddUserToProjectController_1.AddUserToProjectController().handle);

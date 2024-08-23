@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "a8cabb00-e831-47a3-b50f-557a1c8a22c8",
+        "_postman_id": "8a5e6fc2-6ba9-48d5-9532-7a426e176316",
         "name": "TaskTests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -28,7 +28,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"sessionId\": \"c23bb088-cfb4-47c1-aa79-5ae6bd803220\",\n  \"userName\": \"Michael Jackson\",\n  \"userPassword\": \"123\",\n  \"taskName\": \"Construir um foguete de garrafa pet\",\n  \"taskContent\": \"1º arrume uma garrafa pet, 2º ...\"\n}"
+                    "raw": "{\n  \"sessionId\": \"0a880f09-4d78-490b-943b-f3d1c45fc1ff\",\n  \"userName\": \"miguel\",\n  \"userPassword\": \"123\",\n  \"taskName\": \"Construir um foguete de garrafa pet\",\n  \"taskContent\": \"1º arrume uma garrafa pet, 2º ...\"\n}"
                 }
             }
         },
@@ -63,7 +63,14 @@
             "request": {
                 "method": "GET",
                 "url": {
-                    "raw": "localhost:3000/tasks/getTasksBySession",
+                    "raw": "localhost:3000/tasks/getTasksBySession?sessionId=0a880f09-4d78-490b-943b-f3d1c45fc1ff",
+                    "query": [
+                        {
+                            "key": "sessionId",
+                            "value": "0a880f09-4d78-490b-943b-f3d1c45fc1ff"
+                        }
+                    ],
+                    "variable": [],
                     "path": [
                         "tasks",
                         "getTasksBySession"
@@ -80,7 +87,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \n}"
+                    "raw": "{\n  \"sessioId\": \"0a880f09-4d78-490b-943b-f3d1c45fc1ff\"\n}"
                 }
             }
         }

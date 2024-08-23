@@ -5,20 +5,20 @@ import { VerifyProjectAdminService } from '../../services/project/VerifyProjectA
 
 export class RemoveUserFromProjectController {
     async handle(req: Request, res: Response) {
-        const { userId, projectId, adminName, adminPassword } = req.body;
+        const { userName, projectId, adminName, adminPassword } = req.body;
         const authenticateUserService = new AuthenticateUserService();
         const verifyAdminService = new VerifyProjectAdminService();
+        const removeUserFromProjectService = new RemoveUserFromProjectService();
 
         try {
             const admin = await authenticateUserService.execute(adminName, adminPassword);
 
             const isAdmin = await verifyAdminService.execute(admin.id, projectId);
             if (!isAdmin) {
-                return res.status(403).json({ error: 'Only project admins can remove users from the project' });
+                return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
             }
 
-            const removeUserFromProjectService = new RemoveUserFromProjectService();
-            await removeUserFromProjectService.execute(userId, projectId);
+            await removeUserFromProjectService.execute(userName, projectId);
 
             res.status(200).json({ message: 'User removed from project successfully' });
         } catch (error) {

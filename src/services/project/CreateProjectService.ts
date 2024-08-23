@@ -4,15 +4,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export class CreateProjectService {
-    async execute(name: string, users: string[], admins: string[]) {
+    async execute(name: string, usersNames: string[], adminsNames: string[]) {
         return await prisma.project.create({
             data: {
                 name,
                 users: {
-                    connect: users.map((userId: string) => ({ id: userId })),
+                    connect: usersNames.map((userName: string) => ({ name: userName })),
                 },
                 admins: {
-                    connect: admins.map((adminId: string) => ({ id: adminId })),
+                    connect: adminsNames.map((adminName: string) => ({ name: adminName })),
                 },
             },
         });

@@ -14,7 +14,7 @@ const client_1 = require("@prisma/client");
 class LoginUserController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, password } = request.body;
+            const { name, password } = request.params;
             const prismaClient = new client_1.PrismaClient();
             // autentifica o usuário
             const existingUser = yield prismaClient.user.findFirst({

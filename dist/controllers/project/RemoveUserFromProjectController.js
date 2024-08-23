@@ -16,17 +16,17 @@ const VerifyProjectAdminService_1 = require("../../services/project/VerifyProjec
 class RemoveUserFromProjectController {
     handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { userId, projectId, adminName, adminPassword } = req.body;
+            const { userName, projectId, adminName, adminPassword } = req.body;
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             const verifyAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
+            const removeUserFromProjectService = new RemoveUserFromProjectService_1.RemoveUserFromProjectService();
             try {
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
                 const isAdmin = yield verifyAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
                     return res.status(403).json({ error: 'Only project admins can remove users from the project' });
                 }
-                const removeUserFromProjectService = new RemoveUserFromProjectService_1.RemoveUserFromProjectService();
-                yield removeUserFromProjectService.execute(userId, projectId);
+                yield removeUserFromProjectService.execute(userName, projectId);
                 res.status(200).json({ message: 'User removed from project successfully' });
             }
             catch (error) {

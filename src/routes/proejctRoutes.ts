@@ -10,7 +10,7 @@ const projectRoutes = Router();
 projectRoutes.post('/projects/create', new CreateProjectController().handle);
 projectRoutes.get('/projects/getProjectsByUser', new GetProjectsByUserController().handle);
 projectRoutes.patch('/projects/addAdmin', new AddAdminToProjectController().handle);
-projectRoutes.patch('/projects/removeUser', new RemoveUserFromProjectController().handle);
+projectRoutes.delete('/projects/removeUser', new RemoveUserFromProjectController().handle);
 projectRoutes.patch('/projects/addUser', new AddUserToProjectController().handle);
 
 export { projectRoutes };

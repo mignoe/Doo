@@ -14,7 +14,7 @@ export class AddUserToProjectController {
 
             const isAdmin = await verifyAdminService.execute(admin.id, projectId);
             if (!isAdmin) {
-                return res.status(403).json({ error: 'Only project admins can add users to the project' });
+                return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
             }
 
             const addUserToProjectService = new AddUserToProjectService();

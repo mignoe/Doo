@@ -4,10 +4,14 @@ import { GetTasksBySessionService } from '../../services/task/GetTasksBySessionS
 
 export class GetTasksBySessionController {
     async handle(request: Request, response: Response) {
-        const { sessionId } = request.params;
+        const { sessionId } = request.query;
         const getTasksBySessionService = new GetTasksBySessionService();
 
         try {
+            if (!sessionId || typeof sessionId !== 'string') {
+                return response.status(400).json({ error: 'SessionId (string) is required' });
+            }
+
             const tasks = await getTasksBySessionService.execute(sessionId);
             return response.status(200).json(tasks);
         } catch (error) {
