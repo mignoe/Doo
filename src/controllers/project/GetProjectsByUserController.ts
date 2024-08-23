@@ -13,8 +13,8 @@ export class GetProjectsByUserController {
             const user = await authenticateUserService.execute(name, password);
             const projects = await getProjectsByUserService.execute(user.id);
             return response.status(200).json(projects);
-        } catch (error) {
-            return response.status(401).json({ error: error });
+        } catch (error : any) {
+            return response.status(401).json({ error: error.message });
         }
     }
 }

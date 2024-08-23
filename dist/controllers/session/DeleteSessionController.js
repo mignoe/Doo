@@ -9,32 +9,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateSessionController = void 0;
+exports.DeleteSessionController = void 0;
 const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
 const VerifyProjectAdminService_1 = require("../../services/project/VerifyProjectAdminService");
-const CreateSessionService_1 = require("../../services/session/CreateSessionService");
-class CreateSessionController {
+const DeleteSessionService_1 = require("../../services/session/DeleteSessionService");
+const VerifySessionBelongsToProjectService_1 = require("../../services/session/VerifySessionBelongsToProjectService");
+class DeleteSessionController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { projectId, adminName, adminPassword, sessionName } = request.body;
+            const { sessionId, projectId, adminName, adminPassword } = request.body;
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             const verifyProjectAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
-            const createSessionService = new CreateSessionService_1.CreateSessionService();
+            const verifySessionBelongsToProjectService = new VerifySessionBelongsToProjectService_1.VerifySessionBelongsToProjectService();
+            const deleteSessionService = new DeleteSessionService_1.DeleteSessionService();
             try {
                 // Authenticate the user
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
                 // Verify if the user is an admin of the project
                 const isAdmin = yield verifyProjectAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
-                    return response.status(403).json({ error: 'Only admins can create sessions' });
+                    return response.status(403).json({ error: 'Only admins can delete sessions' });
                 }
-                const session = yield createSessionService.execute(projectId, sessionName);
-                return response.status(200).json(session);
+                const sessionBelongsToProject = verifySessionBelongsToProjectService.execute(sessionId, projectId);
+                if (!sessionBelongsToProject) {
+                    return response.status(403).json({ error: 'Session does not belong to the project' });
+                }
+                // Delete the session
+                yield deleteSessionService.execute(sessionId);
+                return response.status(200).json({ message: 'Session deleted successfully' });
             }
             catch (error) {
-                return response.status(500).json({ error: 'Failed to create session' });
+                return response.status(500).json({ error: 'Failed to delete session' });
             }
         });
     }
 }
-exports.CreateSessionController = CreateSessionController;
+exports.DeleteSessionController = DeleteSessionController;

@@ -1,0 +1,51 @@
+{
+    "info": {
+        "_postman_id": "93e168f3-8a13-4f80-84cf-e6a1c09a2d65",
+        "name": "task",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "createTask",
+            "request": {
+                "method": "GET",
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"sessionId\": \"\",\n  \"name\": \"miguel\",\n  \"password\": \"123\",\n  \"taskName\": \"\",\n  \"content\": \"\"\n}"
+                }
+            }
+        },
+        {
+            "name": "PATCH completeTask",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "localhost:3000/task/complete",
+                    "path": [
+                        "task",
+                        "complete"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"idTask\": \"\",\n  \"name\": \"miguel\",\n  \"password\": \"123\"\n}"
+                }
+            }
+        }
+    ]
+}

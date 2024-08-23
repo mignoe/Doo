@@ -8,21 +8,24 @@ export class AddAdminToProjectController {
         const { newAdminId, projectId, adminName, adminPassword } = req.body;
         const authenticateUserService = new AuthenticateUserService();
         const verifyAdminService = new VerifyProjectAdminService();
+        const addAdminToProjectService = new AddAdminToProjectService();
 
         try {
             const admin = await authenticateUserService.execute(adminName, adminPassword);
-
+ 
             const isAdmin = await verifyAdminService.execute(admin.id, projectId);
+
             if (!isAdmin) {
                 return res.status(403).json({ error: 'Only project admins can add admins to the project' });
             }
 
-            const addUserToProjectService = new AddAdminToProjectService();
-            await addUserToProjectService.execute(newAdminId, projectId);
+ 
+            await addAdminToProjectService.execute(newAdminId, projectId);
+
 
             res.status(200).json({ message: 'Admin added to project successfully' });
-        } catch (error) {
-            res.status(500).json({ message: 'Failed to add admin to project', error: error });
+        } catch (error : any) {
+            res.status(500).json({ message: 'Failed to add admin to project', error: error.message });
         }
     }
 }

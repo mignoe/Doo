@@ -10,8 +10,8 @@ export class CreateProjectController {
         try {
             const project = await createProjectService.execute(name, users, admins);
             return response.status(201).json(project);
-        } catch (error) {
-            return response.status(500).json({ message: 'Error creating project', error: error});
+        } catch (error : any) {
+            return response.status(500).json({ message: 'Error creating project', error: error.message});
         }
     }
 }

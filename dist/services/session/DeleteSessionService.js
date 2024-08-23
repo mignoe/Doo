@@ -9,21 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProjectController = void 0;
-const CreateProjectService_1 = require("../../services/project/CreateProjectService");
-class CreateProjectController {
-    handle(request, response) {
+exports.DeleteSessionService = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+class DeleteSessionService {
+    execute(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, users, admins } = request.body;
-            const createProjectService = new CreateProjectService_1.CreateProjectService();
-            try {
-                const project = yield createProjectService.execute(name, users, admins);
-                return response.status(201).json(project);
-            }
-            catch (error) {
-                return response.status(500).json({ message: 'Error creating project', error: error.message });
-            }
+            return yield prisma.session.delete({
+                where: { id: sessionId },
+            });
         });
     }
 }
-exports.CreateProjectController = CreateProjectController;
+exports.DeleteSessionService = DeleteSessionService;

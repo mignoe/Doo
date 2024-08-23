@@ -1,46 +1,32 @@
+// CreateTaskController.ts
 import { Request, Response } from 'express';
-import { PrismaClient, Project, User, Session } from '@prisma/client';
-
-import { GetSessionService } from '../../services/GetSessionService';
-import { UserAuthenticator } from '../../services/UserAuthenticator';
-
-
-
-const prisma = new PrismaClient();
-const userAuthenticator = new UserAuthenticator();
-const getSessionService = new GetSessionService();
+import { AuthenticateUserService } from '../../services/user/AuthenticateUserService';
+import { GetSessionService } from '../../services/session/GetSessionService';
+import { CreateTaskService } from '../../services/task/CreateTaskService';
 
 export class CreateTaskController {
     async handle(request: Request, response: Response) {
-        const { sessionId, userName, userPassword, taskName, taskContent} = request.body;
-        
-        //const user = userAuthenticator.authenticate(userName, userPassword) as User | null;;
+        const { sessionId, userName, userPassword, taskName, taskContent } = request.body;
+        const authenticateUserService = new AuthenticateUserService();
+        const getSessionService = new GetSessionService();
+        const createTaskService = new CreateTaskService();
 
-        // Step 2: Check if the user exists 
-        //if (!user) {
-        //    return response.status(401).json({ error: 'User not found' });
-        //} 
+        try {
+            // Authenticate the user
+            const user = await authenticateUserService.execute(userName, userPassword);
 
-        // Step 1: Find the user by username
-        const session = prisma.session.findUnique({
-            where: { id: sessionId },
-        });
+            // Verify if the session exists
+            const session = await getSessionService.execute(sessionId);
+            if (!session) {
+                return response.status(404).json({ error: 'Session not found' });
+            }
 
-        if (!session) {
-            return response.status(404).json({ error: 'Session not found' });
+            // Create a new task
+            const newTask = await createTaskService.execute(sessionId, taskName, taskContent);
+
+            return response.status(200).json(newTask);
+        } catch (error) {
+            return response.status(500).json({ error: 'Failed to create task' });
         }
-
-        // Step 3: Create a new task
-        const newTask = await prisma.task.create({
-            data: {
-                sessionId: sessionId,  // Associate the task with the session
-                name: taskName,
-                content: taskContent, 
-                isComplete: false,
-            },
-        });
-
-        return response.status(200).json(newTask);
-        
     }
 }

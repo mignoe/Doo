@@ -9,21 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProjectController = void 0;
-const CreateProjectService_1 = require("../../services/project/CreateProjectService");
-class CreateProjectController {
+exports.GetSessionsByProjectController = void 0;
+const GetSessionsByProjectService_1 = require("../../services/session/GetSessionsByProjectService");
+class GetSessionsByProjectController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, users, admins } = request.body;
-            const createProjectService = new CreateProjectService_1.CreateProjectService();
+            const { projectId } = request.params;
+            const getSessionsByProjectService = new GetSessionsByProjectService_1.GetSessionsByProjectService();
             try {
-                const project = yield createProjectService.execute(name, users, admins);
-                return response.status(201).json(project);
+                const sessions = yield getSessionsByProjectService.execute(projectId);
+                return response.status(200).json(sessions);
             }
             catch (error) {
-                return response.status(500).json({ message: 'Error creating project', error: error.message });
+                return response.status(500).json({ error: 'Failed to retrieve sessions' });
             }
         });
     }
 }
-exports.CreateProjectController = CreateProjectController;
+exports.GetSessionsByProjectController = GetSessionsByProjectController;

@@ -21,7 +21,7 @@ export class AddUserToProjectController {
             await addUserToProjectService.execute(userId, projectId);
 
             res.status(200).json({ message: 'User added to project successfully' });
-        } catch (error) {
+        } catch (error : any) {
             res.status(500).json({ error: 'Failed to add user to project' });
         }
     }
