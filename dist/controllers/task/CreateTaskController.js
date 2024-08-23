@@ -10,38 +10,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateTaskController = void 0;
-const client_1 = require("@prisma/client");
-const GetSessionService_1 = require("../../services/GetSessionService");
-const UserAuthenticator_1 = require("../../services/UserAuthenticator");
-const prisma = new client_1.PrismaClient();
-const userAuthenticator = new UserAuthenticator_1.UserAuthenticator();
-const getSessionService = new GetSessionService_1.GetSessionService();
+const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
+const GetSessionService_1 = require("../../services/session/GetSessionService");
+const CreateTaskService_1 = require("../../services/task/CreateTaskService");
 class CreateTaskController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { sessionId, userName, userPassword, taskName, taskContent } = request.body;
-            //const user = userAuthenticator.authenticate(userName, userPassword) as User | null;;
-            // Step 2: Check if the user exists 
-            //if (!user) {
-            //    return response.status(401).json({ error: 'User not found' });
-            //} 
-            // Step 1: Find the user by username
-            const session = prisma.session.findUnique({
-                where: { id: sessionId },
-            });
-            if (!session) {
-                return response.status(404).json({ error: 'Session not found' });
+            const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
+            const getSessionService = new GetSessionService_1.GetSessionService();
+            const createTaskService = new CreateTaskService_1.CreateTaskService();
+            try {
+                // Authenticate the user
+                const user = yield authenticateUserService.execute(userName, userPassword);
+                if (!user) {
+                    return response.status(401).json({ error: 'Invalid credentials' });
+                }
+                // Verify if the session exists
+                const session = yield getSessionService.execute(sessionId);
+                if (!session) {
+                    return response.status(404).json({ error: 'Session not found' });
+                }
+                // Create a new task
+                const newTask = yield createTaskService.execute(sessionId, taskName, taskContent);
+                return response.status(200).json(newTask);
             }
-            // Step 3: Create a new task
-            const newTask = yield prisma.task.create({
-                data: {
-                    sessionId: sessionId, // Associate the task with the session
-                    name: taskName,
-                    content: taskContent,
-                    isComplete: false,
-                },
-            });
-            return response.status(200).json(newTask);
+            catch (error) {
+                return response.status(500).json({ error: error.message });
+            }
         });
     }
 }

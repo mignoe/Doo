@@ -14,6 +14,10 @@ export class CreateTaskController {
         try {
             // Authenticate the user
             const user = await authenticateUserService.execute(userName, userPassword);
+            
+            if (!user) {
+                return response.status(401).json({ error: 'Invalid credentials' });
+            }
 
             // Verify if the session exists
             const session = await getSessionService.execute(sessionId);
@@ -25,8 +29,8 @@ export class CreateTaskController {
             const newTask = await createTaskService.execute(sessionId, taskName, taskContent);
 
             return response.status(200).json(newTask);
-        } catch (error) {
-            return response.status(500).json({ error: 'Failed to create task' });
+        } catch (error : any) {
+            return response.status(500).json({ error: error.message });
         }
     }
 }

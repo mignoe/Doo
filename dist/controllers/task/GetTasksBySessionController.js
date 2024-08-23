@@ -9,27 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddUserToProjectService = void 0;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
-class AddUserToProjectService {
-    execute(newUserName, projectId) {
+exports.GetTasksBySessionController = void 0;
+const GetTasksBySessionService_1 = require("../../services/task/GetTasksBySessionService");
+class GetTasksBySessionController {
+    handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield prisma.user.findUnique({
-                where: { name: newUserName },
-            });
-            if (!user) {
-                throw new Error('User not found');
+            const { sessionId } = request.params;
+            const getTasksBySessionService = new GetTasksBySessionService_1.GetTasksBySessionService();
+            try {
+                const tasks = yield getTasksBySessionService.execute(sessionId);
+                return response.status(200).json(tasks);
             }
-            return yield prisma.project.update({
-                where: { id: projectId },
-                data: {
-                    users: {
-                        connect: { id: user.id },
-                    },
-                },
-            });
+            catch (error) {
+                return response.status(500).json({ error: 'Failed to retrieve tasks' });
+            }
         });
     }
 }
-exports.AddUserToProjectService = AddUserToProjectService;
+exports.GetTasksBySessionController = GetTasksBySessionController;

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteSessionController = void 0;
 const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
 const VerifyProjectAdminService_1 = require("../../services/project/VerifyProjectAdminService");
+const DeleteAllTasksFromSessionService_1 = require("../../services/task/DeleteAllTasksFromSessionService");
 const DeleteSessionService_1 = require("../../services/session/DeleteSessionService");
 const VerifySessionBelongsToProjectService_1 = require("../../services/session/VerifySessionBelongsToProjectService");
 class DeleteSessionController {
@@ -21,6 +22,7 @@ class DeleteSessionController {
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             const verifyProjectAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
             const verifySessionBelongsToProjectService = new VerifySessionBelongsToProjectService_1.VerifySessionBelongsToProjectService();
+            const deleteAllTasksFromSessionService = new DeleteAllTasksFromSessionService_1.DeleteAllTasksFromSessionService();
             const deleteSessionService = new DeleteSessionService_1.DeleteSessionService();
             try {
                 // Authenticate the user
@@ -30,16 +32,19 @@ class DeleteSessionController {
                 if (!isAdmin) {
                     return response.status(403).json({ error: 'Only admins can delete sessions' });
                 }
+                // Verify if the session belongs to the project
                 const sessionBelongsToProject = verifySessionBelongsToProjectService.execute(sessionId, projectId);
                 if (!sessionBelongsToProject) {
                     return response.status(403).json({ error: 'Session does not belong to the project' });
                 }
+                // First we need to delete all the tasks within the session
+                yield deleteAllTasksFromSessionService.execute(sessionId);
                 // Delete the session
                 yield deleteSessionService.execute(sessionId);
                 return response.status(200).json({ message: 'Session deleted successfully' });
             }
             catch (error) {
-                return response.status(500).json({ error: 'Failed to delete session' });
+                return response.status(500).json({ error: error.message });
             }
         });
     }

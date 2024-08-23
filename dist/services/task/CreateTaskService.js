@@ -9,27 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddUserToProjectService = void 0;
+exports.CreateTaskService = void 0;
+// CreateTaskService.ts
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-class AddUserToProjectService {
-    execute(newUserName, projectId) {
+class CreateTaskService {
+    execute(sessionId, taskName, taskContent) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield prisma.user.findUnique({
-                where: { name: newUserName },
-            });
-            if (!user) {
-                throw new Error('User not found');
-            }
-            return yield prisma.project.update({
-                where: { id: projectId },
+            return yield prisma.task.create({
                 data: {
-                    users: {
-                        connect: { id: user.id },
-                    },
+                    sessionId: sessionId,
+                    name: taskName,
+                    content: taskContent,
+                    isComplete: false,
                 },
             });
         });
     }
 }
-exports.AddUserToProjectService = AddUserToProjectService;
+exports.CreateTaskService = CreateTaskService;

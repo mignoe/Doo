@@ -13,13 +13,19 @@ exports.AddAdminToProjectService = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class AddAdminToProjectService {
-    execute(newAdminId, projectId) {
+    execute(newAdminName, projectId) {
         return __awaiter(this, void 0, void 0, function* () {
+            const admin = yield prisma.user.findUnique({
+                where: { name: newAdminName },
+            });
+            if (!admin) {
+                throw new Error('Admin not found');
+            }
             return yield prisma.project.update({
                 where: { id: projectId },
                 data: {
                     admins: {
-                        connect: { id: newAdminId },
+                        connect: { id: admin.id },
                     },
                 },
             });

@@ -5,7 +5,7 @@ import { VerifyProjectAdminService } from '../../services/project/VerifyProjectA
 
 export class AddAdminToProjectController {
     async handle(req: Request, res: Response) {
-        const { newAdminId, projectId, adminName, adminPassword } = req.body;
+        const { newAdminName, projectId, adminName, adminPassword } = req.body;
         const authenticateUserService = new AuthenticateUserService();
         const verifyAdminService = new VerifyProjectAdminService();
         const addAdminToProjectService = new AddAdminToProjectService();
@@ -20,7 +20,7 @@ export class AddAdminToProjectController {
             }
 
  
-            await addAdminToProjectService.execute(newAdminId, projectId);
+            await addAdminToProjectService.execute(newAdminName, projectId);
 
 
             res.status(200).json({ message: 'Admin added to project successfully' });

@@ -16,7 +16,7 @@ const VerifyProjectAdminService_1 = require("../../services/project/VerifyProjec
 class AddAdminToProjectController {
     handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { newAdminId, projectId, adminName, adminPassword } = req.body;
+            const { newAdminName, projectId, adminName, adminPassword } = req.body;
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             const verifyAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
             const addAdminToProjectService = new AddAdminToProjectService_1.AddAdminToProjectService();
@@ -26,7 +26,7 @@ class AddAdminToProjectController {
                 if (!isAdmin) {
                     return res.status(403).json({ error: 'Only project admins can add admins to the project' });
                 }
-                yield addAdminToProjectService.execute(newAdminId, projectId);
+                yield addAdminToProjectService.execute(newAdminName, projectId);
                 res.status(200).json({ message: 'Admin added to project successfully' });
             }
             catch (error) {

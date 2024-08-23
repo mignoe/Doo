@@ -39,7 +39,6 @@ model Session {
 model Project {
   id String @id @default(uuid())
   name String
-  
   sessions Session[] @relation(name: "SessionProject")
   users User[] @relation("ProjectUser")
   admins User[] @relation("ProjectAdmin")

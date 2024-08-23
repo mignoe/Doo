@@ -10,35 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompleteTaskController = void 0;
-const client_1 = require("@prisma/client");
-const UserAuthenticator_1 = require("../../services/UserAuthenticator");
-const GetSessionService_1 = require("../../services/GetSessionService");
-const prisma = new client_1.PrismaClient();
-const userAuthenticator = new UserAuthenticator_1.UserAuthenticator();
-const getSessionService = new GetSessionService_1.GetSessionService();
+const CompleteTaskService_1 = require("../../services/task/CompleteTaskService");
 class CompleteTaskController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { taskId, userName, userPassword } = request.body;
-            const user = userAuthenticator.authenticate(userName, userPassword);
-            ;
-            // Step 2: Check if the user exists 
-            if (!user) {
-                return response.status(401).json({ error: 'User not found' });
+            const { taskId } = request.params;
+            const completeTaskService = new CompleteTaskService_1.CompleteTaskService();
+            try {
+                const updatedTask = yield completeTaskService.execute(taskId);
+                return response.status(200).json(updatedTask);
             }
-            // Step 1: Find the user by username
-            const task = prisma.task.findUnique({
-                where: { id: taskId },
-            });
-            if (!task) {
-                return response.status(404).json({ error: 'Task not found' });
+            catch (error) {
+                return response.status(500).json({ error: 'Failed to complete task' });
             }
-            // Step 3: Update the task's isComplete attribute in the database
-            const updatedTask = yield prisma.task.update({
-                where: { id: taskId },
-                data: { isComplete: true },
-            });
-            return response.json(updatedTask);
         });
     }
 }

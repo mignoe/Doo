@@ -9,8 +9,8 @@ const createTaskController = new CreateTaskController();
 const completeTaskController = new CompleteTaskController();
 const getTasksBySessionController = new GetTasksBySessionController();
 
-taskRoutes.post('/task/create', createTaskController.handle);
-taskRoutes.post('/task/complete', completeTaskController.handle);
-taskRoutes.get('/task/getTasksBySession', getTasksBySessionController.handle);
+taskRoutes.post('/tasks/create', createTaskController.handle);
+taskRoutes.post('/tasks/complete', completeTaskController.handle);
+taskRoutes.get('/tasks/getTasksBySession', getTasksBySessionController.handle);
 
 export { taskRoutes };
