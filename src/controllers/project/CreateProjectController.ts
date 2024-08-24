@@ -8,6 +8,9 @@ export class CreateProjectController {
         const createProjectService = new CreateProjectService();
 
         try {
+            if (adminsNames.length === 0) {
+                return response.status(400).json({ message: 'At least one admin is required' });
+            }
             const project = await createProjectService.execute(name, usersNames, adminsNames);
             return response.status(201).json(project);
         } catch (error : any) {

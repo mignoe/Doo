@@ -7,4 +7,4 @@ const LoginUserController_1 = require("../controllers/user/LoginUserController")
 const userRoutes = (0, express_1.Router)();
 exports.userRoutes = userRoutes;
 userRoutes.post('/sign-up', new CreateUserController_1.CreateUserController().handle);
-userRoutes.get('/login', new LoginUserController_1.LoginUserController().handle);
+userRoutes.post('/login', new LoginUserController_1.LoginUserController().handle);

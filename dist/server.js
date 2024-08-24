@@ -8,11 +8,8 @@ const userRoutes_1 = require("./routes/userRoutes");
 const proejctRoutes_1 = require("./routes/proejctRoutes");
 const taskRoutes_1 = require("./routes/taskRoutes");
 const sessionRoutes_1 = require("./routes/sessionRoutes");
-const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 const port = 3000;
-// Making it able to test with the swagger website
-app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(userRoutes_1.userRoutes);
 app.use(proejctRoutes_1.projectRoutes);

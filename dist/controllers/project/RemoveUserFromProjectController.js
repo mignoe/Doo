@@ -24,7 +24,7 @@ class RemoveUserFromProjectController {
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
                 const isAdmin = yield verifyAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
-                    return res.status(403).json({ error: 'Only project admins can remove users from the project' });
+                    return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
                 }
                 yield removeUserFromProjectService.execute(userName, projectId);
                 res.status(200).json({ message: 'User removed from project successfully' });

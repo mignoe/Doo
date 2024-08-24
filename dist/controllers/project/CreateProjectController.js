@@ -14,10 +14,13 @@ const CreateProjectService_1 = require("../../services/project/CreateProjectServ
 class CreateProjectController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, users, admins } = request.body;
+            const { name, usersNames, adminsNames } = request.body;
             const createProjectService = new CreateProjectService_1.CreateProjectService();
             try {
-                const project = yield createProjectService.execute(name, users, admins);
+                if (adminsNames.length === 0) {
+                    return response.status(400).json({ message: 'At least one admin is required' });
+                }
+                const project = yield createProjectService.execute(name, usersNames, adminsNames);
                 return response.status(201).json(project);
             }
             catch (error) {

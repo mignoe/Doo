@@ -24,7 +24,7 @@ class AddAdminToProjectController {
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
                 const isAdmin = yield verifyAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
-                    return res.status(403).json({ error: 'Only project admins can add admins to the project' });
+                    return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
                 }
                 yield addAdminToProjectService.execute(newAdminName, projectId);
                 res.status(200).json({ message: 'Admin added to project successfully' });

@@ -26,7 +26,7 @@ class CreateSessionController {
                 // Verify if the user is an admin of the project
                 const isAdmin = yield verifyProjectAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
-                    return response.status(403).json({ error: 'Only admins can create sessions' });
+                    return response.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
                 }
                 const session = yield createSessionService.execute(projectId, sessionName);
                 return response.status(200).json(session);

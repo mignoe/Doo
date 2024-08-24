@@ -9,25 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProjectService = void 0;
-// CreateProjectService.ts
+exports.RemoveUserFromProjectService = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-class CreateProjectService {
-    execute(name, usersNames, adminsNames) {
+class RemoveUserFromProjectService {
+    execute(userName, projectId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield prisma.project.create({
+            return yield prisma.project.update({
+                where: { id: projectId },
                 data: {
-                    name,
                     users: {
-                        connect: usersNames.map((userName) => ({ name: userName })),
-                    },
-                    admins: {
-                        connect: adminsNames.map((adminName) => ({ name: adminName })),
+                        disconnect: { name: userName },
                     },
                 },
             });
         });
     }
 }
-exports.CreateProjectService = CreateProjectService;
+exports.RemoveUserFromProjectService = RemoveUserFromProjectService;

@@ -30,7 +30,7 @@ class DeleteSessionController {
                 // Verify if the user is an admin of the project
                 const isAdmin = yield verifyProjectAdminService.execute(admin.id, projectId);
                 if (!isAdmin) {
-                    return response.status(403).json({ error: 'Only admins can delete sessions' });
+                    return response.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
                 }
                 // Verify if the session belongs to the project
                 const sessionBelongsToProject = verifySessionBelongsToProjectService.execute(sessionId, projectId);
