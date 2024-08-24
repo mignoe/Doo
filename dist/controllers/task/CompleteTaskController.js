@@ -14,14 +14,14 @@ const CompleteTaskService_1 = require("../../services/task/CompleteTaskService")
 class CompleteTaskController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { taskId } = request.params;
+            const { taskId } = request.body;
             const completeTaskService = new CompleteTaskService_1.CompleteTaskService();
             try {
                 const updatedTask = yield completeTaskService.execute(taskId);
                 return response.status(200).json(updatedTask);
             }
             catch (error) {
-                return response.status(500).json({ error: 'Failed to complete task' });
+                return response.status(500).json({ error: 'Failed to complete task', fullError: error.message });
             }
         });
     }

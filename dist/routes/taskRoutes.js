@@ -11,5 +11,5 @@ const createTaskController = new CreateTaskController_1.CreateTaskController();
 const completeTaskController = new CompleteTaskController_1.CompleteTaskController();
 const getTasksBySessionController = new GetTasksBySessionController_1.GetTasksBySessionController();
 taskRoutes.post('/tasks/create', createTaskController.handle);
-taskRoutes.post('/tasks/complete', completeTaskController.handle);
+taskRoutes.patch('/tasks/complete', completeTaskController.handle);
 taskRoutes.get('/tasks/getTasksBySession', getTasksBySessionController.handle);

@@ -4,7 +4,7 @@ import { GetTasksBySessionService } from '../../services/task/GetTasksBySessionS
 
 export class GetTasksBySessionController {
     async handle(request: Request, response: Response) {
-        const { sessionId } = request.query;
+        const { sessionId } = request.body;
         const getTasksBySessionService = new GetTasksBySessionService();
 
         try {

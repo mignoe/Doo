@@ -10,7 +10,7 @@ const completeTaskController = new CompleteTaskController();
 const getTasksBySessionController = new GetTasksBySessionController();
 
 taskRoutes.post('/tasks/create', createTaskController.handle);
-taskRoutes.post('/tasks/complete', completeTaskController.handle);
+taskRoutes.patch('/tasks/complete', completeTaskController.handle);
 taskRoutes.get('/tasks/getTasksBySession', getTasksBySessionController.handle);
 
 export { taskRoutes };

@@ -14,7 +14,7 @@ const GetTasksBySessionService_1 = require("../../services/task/GetTasksBySessio
 class GetTasksBySessionController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { sessionId } = request.query;
+            const { sessionId } = request.body;
             const getTasksBySessionService = new GetTasksBySessionService_1.GetTasksBySessionService();
             try {
                 if (!sessionId || typeof sessionId !== 'string') {
