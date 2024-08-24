@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "8a5e6fc2-6ba9-48d5-9532-7a426e176316",
+        "_postman_id": "15c80e18-a326-4c2c-8987-bdad3c2448f7",
         "name": "TaskTests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -28,7 +28,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"sessionId\": \"0a880f09-4d78-490b-943b-f3d1c45fc1ff\",\n  \"userName\": \"miguel\",\n  \"userPassword\": \"123\",\n  \"taskName\": \"Construir um foguete de garrafa pet\",\n  \"taskContent\": \"1º arrume uma garrafa pet, 2º ...\"\n}"
+                    "raw": "{\n  \"sessionId\": \"67170fdd-c8aa-493f-a0b6-b534b8dd75ce\",\n  \"userName\": \"miguel\",\n  \"userPassword\": \"123\",\n  \"taskName\": \"Construir um foguete de garrafa pet\",\n  \"taskContent\": \"1º arrume uma garrafa pet, 2º ...\"\n}"
                 }
             }
         },
@@ -37,9 +37,9 @@
             "request": {
                 "method": "PATCH",
                 "url": {
-                    "raw": "localhost:3000/task/complete",
+                    "raw": "localhost:3000/tasks/complete",
                     "path": [
-                        "task",
+                        "tasks",
                         "complete"
                     ],
                     "host": [
@@ -54,7 +54,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"idTask\": \"\",\n  \"name\": \"miguel\",\n  \"password\": \"123\"\n}"
+                    "raw": "{\n  \"taskId\": \"943e6420-50c2-41be-8b22-8a87b21cb555\",\n  \"name\": \"miguel\",\n  \"password\": \"123\"\n}"
                 }
             }
         },
@@ -87,7 +87,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"sessioId\": \"0a880f09-4d78-490b-943b-f3d1c45fc1ff\"\n}"
+                    "raw": "{\n  \"sessionId\": \"67170fdd-c8aa-493f-a0b6-b534b8dd75ce\"\n}"
                 }
             }
         }

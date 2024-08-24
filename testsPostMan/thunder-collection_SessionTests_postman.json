@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "53a5a4a3-5f75-4114-8a6b-cd392cda1f3e",
+        "_postman_id": "33e8f27e-5a81-49ad-9eb1-f35e432361ff",
         "name": "SessionTests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -28,7 +28,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\",  \n  \"sessionName\": \"Sessao diferenciada\",\n  \"adminName\": \"admin\",\n  \"adminPassword\": \"123\"\n}"
+                    "raw": "{\n  \"projectId\": \"275a43ca-1471-40f9-9da0-332a4b3117e3\",  \n  \"sessionName\": \"Sessao diferenciada\",\n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\"\n}"
                 }
             }
         },
@@ -54,7 +54,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{ \n  \"sessionId\": \"96ada46c-9ad8-469f-8fe8-c2a9d4c99ba1\",\n  \"adminName\": \"admin\",\n  \"adminPassword\": \"123\"\n}"
+                    "raw": "{ \n  \"sessionId\": \"32a2440b-0e54-4391-b228-acd478dbf13a\",\n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\"\n}"
                 }
             }
         },
@@ -80,7 +80,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\"\n}"
+                    "raw": "{\n  \"projectId\": \"275a43ca-1471-40f9-9da0-332a4b3117e3\"\n}"
                 }
             }
         }

@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "10f0ae3c-db5a-4f04-9910-8b19fc70e5a0",
+        "_postman_id": "9ea84a40-d542-4e6b-b8e5-4b9628c1fbf6",
         "name": "ProjectTests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -28,7 +28,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"name\": \"Projeto teste base\",\n  \"usersNames\": [],\n  \"adminsNames\": [\"admin\"]\n}"
+                    "raw": "{\n  \"name\": \"Projeto teste base\",\n  \"usersNames\": [],\n  \"adminsNames\": [\"admin2\"]\n}"
                 }
             }
         },
@@ -54,7 +54,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"name\": \"admin\",\n  \"password\": \"123\"  \n}"
+                    "raw": "{\n  \"name\": \"admin2\",\n  \"password\": \"123\"  \n}"
                 }
             }
         },
@@ -80,7 +80,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\",  \n  \"adminName\": \"admin\",\n  \"adminPassword\": \"123\",\n  \"newUserName\": \"miguel\"\n}"
+                    "raw": "{\n  \"projectId\": \"275a43ca-1471-40f9-9da0-332a4b3117e3\",  \n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\",\n  \"newUserName\": \"miguel\"\n}"
                 }
             }
         },
@@ -106,7 +106,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\",  \n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\",\n  \"userName\": \"miguel\"\n}"
+                    "raw": "{\n  \"projectId\": \"275a43ca-1471-40f9-9da0-332a4b3117e3\",  \n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\",\n  \"userName\": \"miguel\"\n}"
                 }
             }
         },
@@ -132,7 +132,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\",  \n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\",\n  \"newAdminName\": \"admin3\"\n}"
+                    "raw": "{\n  \"projectId\": \"275a43ca-1471-40f9-9da0-332a4b3117e3\",  \n  \"adminName\": \"admin2\",\n  \"adminPassword\": \"123\",\n  \"newAdminName\": \"miguel\"\n}"
                 }
             }
         }

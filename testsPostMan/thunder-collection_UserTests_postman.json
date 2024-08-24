@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "340a0a65-0ab9-431d-baa1-b2d920155ef7",
+        "_postman_id": "ef53aef0-3e99-402d-8f2e-b7f731f5a66a",
         "name": "UserTests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -27,7 +27,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"name\": \"admin2\",\n  \"password\": \"123\"\n}"
+                    "raw": "{\n  \"name\": \"miguel\",\n  \"password\": \"123\"\n}"
                 }
             }
         },
@@ -52,7 +52,7 @@
                             "language": "json"
                         }
                     },
-                    "raw": "{\n  \"name\": \"admin\",\n  \"password\": \"124\"\n}"
+                    "raw": "{\n  \"name\": \"admin2\",\n  \"password\": \"123\"\n}"
                 }
             }
         }
