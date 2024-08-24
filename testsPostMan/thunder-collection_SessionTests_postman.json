@@ -1,0 +1,88 @@
+{
+    "info": {
+        "_postman_id": "53a5a4a3-5f75-4114-8a6b-cd392cda1f3e",
+        "name": "SessionTests",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "createSession",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:3000/sessions/create",
+                    "path": [
+                        "sessions",
+                        "create"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\",  \n  \"sessionName\": \"Sessao diferenciada\",\n  \"adminName\": \"admin\",\n  \"adminPassword\": \"123\"\n}"
+                }
+            }
+        },
+        {
+            "name": "deleteSession",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "localhost:3000/sessions/delete",
+                    "path": [
+                        "sessions",
+                        "delete"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{ \n  \"sessionId\": \"96ada46c-9ad8-469f-8fe8-c2a9d4c99ba1\",\n  \"adminName\": \"admin\",\n  \"adminPassword\": \"123\"\n}"
+                }
+            }
+        },
+        {
+            "name": "GetSessions",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:3000/sessions/getSessionsByProject",
+                    "path": [
+                        "sessions",
+                        "getSessionsByProject"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"projectId\": \"9d7453df-3163-45d8-af7b-e436d36ff413\"\n}"
+                }
+            }
+        }
+    ]
+}

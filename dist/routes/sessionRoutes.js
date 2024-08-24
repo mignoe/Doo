@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sessionRoutes = void 0;
+const express_1 = require("express");
+const CreateSessionController_1 = require("../controllers/session/CreateSessionController");
+const DeleteSessionController_1 = require("../controllers/session/DeleteSessionController");
+const GetSessionsByProjectController_1 = require("../controllers/session/GetSessionsByProjectController");
+const sessionRoutes = (0, express_1.Router)();
+exports.sessionRoutes = sessionRoutes;
+const createSessionController = new CreateSessionController_1.CreateSessionController();
+const deleteSessionController = new DeleteSessionController_1.DeleteSessionController();
+const getSessionsByProjectController = new GetSessionsByProjectController_1.GetSessionsByProjectController();
+sessionRoutes.post('/sessions/create', createSessionController.handle);
+sessionRoutes.delete('/sessions/delete', deleteSessionController.handle);
+sessionRoutes.get('/sessions/getSessionsByProject', getSessionsByProjectController.handle);

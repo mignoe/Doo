@@ -7,4 +7,4 @@ Especificação:
 
 
 Documentação Swagger:
-    - https://app.swaggerhub.com/apis/MIGUELRODRIGUES_1/Web2-Doo/1.0.0#/Task
+https://app.swaggerhub.com/apis/MIGUELRODRIGUES_1/Web2-Doo/1.0.0#/
