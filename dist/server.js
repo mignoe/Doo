@@ -16,7 +16,7 @@ app.use(proejctRoutes_1.projectRoutes);
 app.use(sessionRoutes_1.sessionRoutes);
 app.use(taskRoutes_1.taskRoutes);
 app.get('/', (request, response) => {
-    return response.json({ message: 'Hello World' });
+    return response.json({ message: 'This is the Doo service! :)' });
 });
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

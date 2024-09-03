@@ -14,7 +14,7 @@ app.use(sessionRoutes);
 app.use(taskRoutes);
 
 app.get('/', (request: Request, response: Response) => {
-  return response.json({ message: 'Hello World' });
+  return response.json({ message: 'This is the Doo service! :)' });
 });
 
 app.listen(port, () => {
