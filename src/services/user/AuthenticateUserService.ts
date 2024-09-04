@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { InvalidCredentialsError } from '../../errors/AuthenticationError';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,9 @@ export class AuthenticateUserService {
 
         if (!user || user.password_hash !== password_hash) {
             throw new Error('Invalid username or password');
+        }
+        if (!user || user.password_hash !== password) {
+            throw new InvalidCredentialsError();
         }
 
         return user;

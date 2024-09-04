@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { UserAccessDeniedError } from '../../errors/UserAccessDeniedError';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +10,7 @@ export class AddAdminToProjectService {
         });
 
         if (!admin) {
-            throw new Error('Admin not found');
+            throw new UserAccessDeniedError();
         }
 
         return await prisma.project.update({
