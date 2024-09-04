@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { CustomError } from '../../errors/CustomError';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +10,7 @@ export class CreateUserService {
         });
 
         if (existingUser) {
-            throw new Error('User already exists');
+            throw new CustomError('User already exists', 400);
         }
 
         return await prisma.user.create({

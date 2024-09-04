@@ -17,7 +17,10 @@ export class CreateProjectController {
         } catch (error : any) {
             
             if (error instanceof CustomError) {
-                return response.status(error.statusCode).json({ message: error.message });
+                const statusCode = error.statusCode;
+                const message = error.message;
+
+                return response.status(statusCode).json({ error: message });
             }
 
             return response.status(500).json({ error: 'Unknown error creating project'});

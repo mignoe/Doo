@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { InvalidCredentialsError } from '../../errors/AuthenticationError';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +10,7 @@ export class AuthenticateUserService {
         });
 
         if (!user || user.password !== password) {
-            throw new Error('Invalid username or password');
+            throw new InvalidCredentialsError();
         }
 
         return user;
