@@ -16,7 +16,7 @@ export class AuthenticateUserService {
         if (!user || user.password_hash !== password_hash) {
             throw new Error('Invalid username or password');
         }
-        if (!user || user.password_hash !== password) {
+        if (!user || user.password_hash !== password_hash) {
             throw new InvalidCredentialsError();
         }
 
