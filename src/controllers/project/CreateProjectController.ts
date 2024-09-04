@@ -1,6 +1,7 @@
 // CreateProjectController.ts
 import { Request, Response } from 'express';
 import { CreateProjectService } from '../../services/project/CreateProjectService';
+import { CustomError } from '../../errors/CustomError';
 
 export class CreateProjectController {
     async handle(request: Request, response: Response) {
@@ -14,7 +15,12 @@ export class CreateProjectController {
             const project = await createProjectService.execute(name, usersNames, adminsNames);
             return response.status(201).json(project);
         } catch (error : any) {
-            return response.status(500).json({ message: 'Error creating project', error: error.message});
+            
+            if (error instanceof CustomError) {
+                return response.status(error.statusCode).json({ message: error.message });
+            }
+
+            return response.status(500).json({ error: 'Unknown error creating project'});
         }
     }
 }
