@@ -2,16 +2,18 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
+import { app } from '../main/server';
+
 // let mongoose = require("mongoose");
 
 //Require the dev-dependencies
 let chai_ = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../main/server');
-let should = chai.should();
+const server = app;
+let should = chai_.should();
 
 
-chai.use(chaiHttp);
+chai_.use(chaiHttp);
 //Our parent block
 describe('Users', () => {
     beforeEach((done) => { //Before each test we empty the database
