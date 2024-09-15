@@ -11,7 +11,7 @@ const server = app;
 describe('Create Projects', () => {
     beforeEach(async () => {
         await request(server)
-            .post('/sign-up')
+            .post('localhost:3000/sign-up')
             .send({ 'name': "Test", 'password': "123" })
             .expect(201);
     });

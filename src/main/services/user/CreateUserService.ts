@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { CustomError } from '../../errors/CustomError';
+import { UserAlreadyExistsError } from '../../errors/UserAlreadyExistsError';
 
 const prisma = new PrismaClient();
 
@@ -12,7 +12,7 @@ export class CreateUserService {
         });
         
         if (existingUser) {
-            throw new CustomError('User already exists', 400);
+            throw new UserAlreadyExistsError();
         }
         
         const password_hash = await bcrypt.hash(password, 8);

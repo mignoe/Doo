@@ -6,6 +6,11 @@ import { CustomError } from '../../errors/CustomError';
 export class CreateUserController {
     async handle(request: Request, response: Response) {
         const { name, password } = request.body;
+
+        if (!name || !password) {
+            return response.status(500).json({ error: "Name or Password is required" });
+        }
+
         const createUserService = new CreateUserService();
 
         try {
