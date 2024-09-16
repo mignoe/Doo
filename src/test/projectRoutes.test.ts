@@ -5,37 +5,51 @@ import { app } from '../main/server';
 import request from 'supertest';
 import { expect } from 'chai';
 
+
+import { PrismaClient } from '@prisma/client';import exp from 'constants';
+const prisma = new PrismaClient();
+
 const server = app;
+
+const createProjectRoute = '/projects/create';
 
 // Our parent block
 describe('Create Projects', () => {
     beforeEach(async () => {
+
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+
         await request(server)
-            .post('localhost:3000/sign-up')
+            .post('/sign-up')
             .send({ 'name': "Test", 'password': "123" })
             .expect(201);
     });
 
     describe('/POST create project', () => {
         it('should create the project', async () => {
-            await request(server)
-                .post('/create-project')
-                .send({ 'name': "Project Test", 'description': "123", "userName": "Test", "password": "123" })
-                .expect(201);
+            const response = await request(server)
+                .post(createProjectRoute)
+                .send({ 'name': "Project Test",  "adminsNames": ["Test"], "usersNames": [], "userName": "Test", "userPassword": "123" });
+
+                expect(response.body.error).equal(undefined);
+                expect(response.status).equal(201);
+                expect(response.body.message).equal("Project created successfully.");
         });
     });
     
     describe('/POST create project with empty string', () => {
         it('should not create the project with an empty name', async () => {
             await request(server)
-                .post('/create-project')
+                .post(createProjectRoute)
                 .send({ 'name': "", 'description': "123", "userName": "Test", "password": "123" })
                 .expect(500);
         });
         
         it('should not create the project with an empty description', async () => {
             await request(server)
-                .post('/create-project')
+                .post(createProjectRoute)
                 .send({ 'name': "TestProject", 'description': "", "userName": "Test", "password": "123" })
                 .expect(500);
         });
@@ -57,7 +71,7 @@ describe('Try to add members to the Project', () => {
             .expect(201);
 
         const res = await request(server)
-            .post('/projects/create')
+            .post(createProjectRoute)
             .send({ 'name': "TestProject", 'description': "Testing", 'userName': "Test", 'userPassword': "123" })
             .expect(201);
         projectId = res.body.id;

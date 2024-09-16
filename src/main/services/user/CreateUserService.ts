@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+
+// Create a SHA-256 hash
+
 import { UserAlreadyExistsError } from '../../errors/UserAlreadyExistsError';
 
 const prisma = new PrismaClient();
@@ -15,8 +18,8 @@ export class CreateUserService {
             throw new UserAlreadyExistsError();
         }
         
-        const password_hash = await bcrypt.hash(password, 8);
-
+        const password_hash = crypto.createHash('sha256').update(password).digest('hex');
+        
         return await prisma.user.create({
             data: {
                 name,

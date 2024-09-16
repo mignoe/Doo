@@ -2,18 +2,20 @@
 import { Request, Response } from 'express';
 import { CreateProjectService } from '../../services/project/CreateProjectService';
 import { CustomError } from '../../errors/CustomError';
+import { AuthenticateUserService } from '../../services/user/AuthenticateUserService';
 
 export class CreateProjectController {
     async handle(request: Request, response: Response) {
-        const { name, usersNames, adminsNames } = request.body;
+        const { name, usersNames, adminsNames, userName, userPassword } = request.body;
         const createProjectService = new CreateProjectService();
+        const authenticatedUser = new AuthenticateUserService();
 
         try {
-            if (adminsNames.length === 0) {
-                return response.status(400).json({ message: 'At least one admin is required' });
-            }
+            await authenticatedUser.execute(userName, userPassword);
+
             const project = await createProjectService.execute(name, usersNames, adminsNames);
-            return response.status(201).json(project);
+
+            return response.status(201).json({message: "Project created successfully."});
         } catch (error : any) {
             
             if (error instanceof CustomError) {
@@ -23,7 +25,7 @@ export class CreateProjectController {
                 return response.status(statusCode).json({ error: message });
             }
 
-            return response.status(500).json({ error: 'Unknown error creating project'});
+            return response.status(500).json({ error: 'Unknown error creating project' });
         }
     }
 }
