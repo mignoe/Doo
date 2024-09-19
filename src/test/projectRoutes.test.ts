@@ -17,15 +17,17 @@ const createProjectRoute = '/projects/create';
 describe('Create Projects', () => {
     beforeEach(async () => {
 
-        await prisma.user.deleteMany({});
-        await prisma.project.deleteMany({});
-        await prisma.session.deleteMany({});
-
         await request(server)
             .post('/sign-up')
             .send({ 'name': "Test", 'password': "123" })
             .expect(201);
     });
+
+    afterEach(async () => {
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+    } );
 
     describe('/POST create project', () => {
         it('should create the project', async () => {

@@ -4,13 +4,22 @@ import { app } from '../main/server';
 import request from 'supertest';
 import { expect } from 'chai';
 
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+
 const server = app;
 //tests
-describe('Create tasks', () => {
+describe('Create sessions', () => {
 
     let projectId: string;
 
     beforeEach(async () => {
+
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+
         await request(server)
             .post('/sign-up')
             .send({ 'name': "Test", 'password': "123" })
@@ -28,6 +37,12 @@ describe('Create tasks', () => {
 
         projectId = res.body.id;
     });
+
+    afterEach(async () => {
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+    } );
 
     describe('/POST create session', () => {
         it('should create the session', async () => {

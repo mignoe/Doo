@@ -1,6 +1,11 @@
 import request from 'supertest';
 import { app } from '../main/server'; // Adjust the import according to your project
 
+import { PrismaClient } from '@prisma/client';import exp from 'constants';
+import { expect } from 'chai';
+const prisma = new PrismaClient();
+
+
 describe('Create tasks', () => {
     let projectId: string;
     let sessionId: string;
@@ -32,12 +37,22 @@ describe('Create tasks', () => {
         sessionId = sessionRes.body.id;
     });
 
+    afterEach(async () => {
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+    } );
+
     describe('/POST create task', () => {
         it('should create the task', async () => {
-            await request(app)
+            const response = await request(app)
                 .post('/tasks/create')
-                .send({ name: "Task Test", sessionId, userName: "Test", password: "123" })
-                .expect(201);
+                .send({ name: "Task Test", "sessionId": sessionId, userName: "Test", password: "123" });
+
+            expect(response.body.error).equal(undefined);
+            expect(response.status).equal(201);
+            expect(response.body.message).equal("Task created successfully.");
+
         });
 
         it('should not create the task with missing name', async () => {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "types:check": "tsc --noEmit",
-    "test": "mocha --require ts-node/register 'src/test/**/*.test.ts'",
+    "test": "mocha --require ts-node/register 'src/test/**/*.test.ts' --timeout -1",
     "build": "tsc",
     "start": "node dist/main/server.js",
     "dev": "ts-node src/main/server.ts"

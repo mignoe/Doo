@@ -19,6 +19,12 @@ describe('Users', () => {
       await prisma.session.deleteMany({});
     });
 
+    afterEach(async () => {
+        await prisma.user.deleteMany({});
+        await prisma.project.deleteMany({});
+        await prisma.session.deleteMany({});
+    } );
+
     // Sign-up user tests
     describe('/POST sign-up', () => {
         it('should create the user', async () => {
@@ -42,6 +48,8 @@ describe('Users', () => {
                 .expect(500);
         });
     });
+
+
 
     // Login user tests
     describe('/POST login', () => {
