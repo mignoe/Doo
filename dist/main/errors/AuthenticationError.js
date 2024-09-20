@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InvalidCredentialsError = void 0;
+exports.AuthenticationError = void 0;
 const CustomError_1 = require("./CustomError");
-class InvalidCredentialsError extends CustomError_1.CustomError {
+class AuthenticationError extends CustomError_1.CustomError {
     constructor() {
-        super("The name or password is incorrect.", 401); // 401 Unauthorized status code
+        super("invalid username or password.", 401); // 401 Unauthorized status code
         this.name = "InvalidCredentialsError"; // Set the error name
     }
 }
-exports.InvalidCredentialsError = InvalidCredentialsError;
+exports.AuthenticationError = AuthenticationError;

@@ -3,6 +3,8 @@ import { AuthenticateUserService } from '../../services/user/AuthenticateUserSer
 import { VerifyProjectAdminService } from '../../services/project/VerifyProjectAdminService';
 import { CreateSessionService } from '../../services/session/CreateSessionService';
 
+import { CustomError } from '../../errors/CustomError';
+
 export class CreateSessionController {
     async handle(request: Request, response: Response) {
         const { projectId, adminName, adminPassword, sessionName } = request.body;
@@ -11,20 +13,26 @@ export class CreateSessionController {
         const createSessionService = new CreateSessionService();
 
         try {
+            // throw new Error([projectId, sessionName].join(' '));
             // Authenticate the user
             const admin = await authenticateUserService.execute(adminName, adminPassword);
 
             // Verify if the user is an admin of the project
-            const isAdmin = await verifyProjectAdminService.execute(admin.id, projectId);
-            if (!isAdmin) {
-                return response.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
-            }
-
+            await verifyProjectAdminService.execute(admin.id, projectId);
+        
             const session = await createSessionService.execute(projectId, sessionName);
 
-            return response.status(200).json(session);
-        } catch (error) {
-            return response.status(500).json({ error: 'Failed to create session' });
+            return response.status(201).json({ message: 'Session created successfully.', id: session.id });
+        } catch (error : any) {
+
+            if (error instanceof CustomError) {
+                const statusCode = error.statusCode;
+                const message = error.message;
+
+                return response.status(statusCode).json({ error: message });
+            }
+
+            return response.status(500).json({ /*error: 'Failed to create session'*/error: error.message });
         }
     }
 }

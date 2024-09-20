@@ -12,10 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProjectService = void 0;
 // CreateProjectService.ts
 const client_1 = require("@prisma/client");
+const AtLeastOneAdminError_1 = require("../../errors/proejct/AtLeastOneAdminError");
 const prisma = new client_1.PrismaClient();
 class CreateProjectService {
     execute(name, usersNames, adminsNames) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (adminsNames === undefined || adminsNames.length === 0) {
+                throw new AtLeastOneAdminError_1.AtLeastOneAdminError();
+            }
             return yield prisma.project.create({
                 data: {
                     name,

@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { UserAccessDeniedError } from '../../errors/UserAccessDeniedError';
 
 const prisma = new PrismaClient();
 
 export class VerifyProjectAdminService {
-    async execute(userId: string, projectId: string): Promise<boolean> {
+    async execute(userId: string, projectId: string) {
         const project = await prisma.project.findFirst({
             where: {
                 id: projectId,
@@ -13,6 +14,8 @@ export class VerifyProjectAdminService {
             },
         });
 
-        return project !== null;
+        if (project === null) {
+            throw new UserAccessDeniedError();
+        }
     }
 }

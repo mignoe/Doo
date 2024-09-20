@@ -18,11 +18,8 @@ class LoginUserController {
             const { name, password } = request.body;
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             try {
-                const existingUser = yield authenticateUserService.execute(name, password);
-                if (existingUser) {
-                    return response.status(200).json(existingUser);
-                }
-                return response.status(404).json({ error: 'User not found' });
+                const user = yield authenticateUserService.execute(name, password);
+                return response.status(200).json({ message: "User logged in successfully", user: user.name });
             }
             catch (error) {
                 if (error instanceof CustomError_1.CustomError) {
@@ -30,7 +27,7 @@ class LoginUserController {
                     const message = error.message;
                     return response.status(statusCode).json({ error: message });
                 }
-                return response.status(500).json({ error: error.message });
+                return response.status(500).json({ message: /*"Uknown error creating User"*/ error.message });
             }
         });
     }

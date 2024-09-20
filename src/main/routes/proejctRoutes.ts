@@ -5,12 +5,14 @@ import { AddAdminToProjectController } from '../controllers/project/AddAdminToPr
 import { RemoveUserFromProjectController } from '../controllers/project/RemoveUserFromProjectController';
 import { AddUserToProjectController } from '../controllers/project/AddUserToProjectController';	
 
+import { verifyInputs } from '../utils/verifyInputs';
+
 const projectRoutes = Router();
 
-projectRoutes.post('/projects/create', new CreateProjectController().handle);
-projectRoutes.get('/projects/getProjectsByUser', new GetProjectsByUserController().handle);
-projectRoutes.patch('/projects/addAdmin', new AddAdminToProjectController().handle);
-projectRoutes.delete('/projects/removeUser', new RemoveUserFromProjectController().handle);
-projectRoutes.patch('/projects/addUser', new AddUserToProjectController().handle);
+projectRoutes.post('/projects/create', verifyInputs, new CreateProjectController().handle);
+projectRoutes.get('/projects/getProjectsByUser', verifyInputs, new GetProjectsByUserController().handle);
+projectRoutes.patch('/projects/addAdmin', verifyInputs,new AddAdminToProjectController().handle);
+projectRoutes.delete('/projects/removeUser', verifyInputs,new RemoveUserFromProjectController().handle);
+projectRoutes.patch('/projects/addUser', verifyInputs,new AddUserToProjectController().handle);
 
 export { projectRoutes };

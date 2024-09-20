@@ -12,17 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProjectController = void 0;
 const CreateProjectService_1 = require("../../services/project/CreateProjectService");
 const CustomError_1 = require("../../errors/CustomError");
+const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
 class CreateProjectController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, usersNames, adminsNames } = request.body;
+            const { name, usersNames, adminsNames, userName, userPassword } = request.body;
             const createProjectService = new CreateProjectService_1.CreateProjectService();
+            const authenticatedUser = new AuthenticateUserService_1.AuthenticateUserService();
             try {
-                if (adminsNames.length === 0) {
-                    return response.status(400).json({ message: 'At least one admin is required' });
-                }
+                yield authenticatedUser.execute(userName, userPassword);
                 const project = yield createProjectService.execute(name, usersNames, adminsNames);
-                return response.status(201).json(project);
+                return response.status(201).json({ message: "Project created successfully." });
             }
             catch (error) {
                 if (error instanceof CustomError_1.CustomError) {

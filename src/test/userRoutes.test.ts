@@ -14,15 +14,17 @@ const server = app;
 describe('Users', () => {
 
     beforeEach(async () => {
-      await prisma.user.deleteMany({});
-      await prisma.project.deleteMany({});
-      await prisma.session.deleteMany({});
+        await prisma.user.deleteMany({});
+        await prisma.task.deleteMany({});
+        await prisma.session.deleteMany({});
+        await prisma.project.deleteMany({});
     });
 
     afterEach(async () => {
         await prisma.user.deleteMany({});
-        await prisma.project.deleteMany({});
+        await prisma.task.deleteMany({});
         await prisma.session.deleteMany({});
+        await prisma.project.deleteMany({});
     } );
 
     // Sign-up user tests
@@ -30,7 +32,7 @@ describe('Users', () => {
         it('should create the user', async () => {
             await request(server)
                 .post('/sign-up')
-                .send({ name: "Test", password: "123" })
+                .send({ name: "Test", password: "123" })     
                 .expect(201);
         });
 

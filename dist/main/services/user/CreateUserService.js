@@ -14,8 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserService = void 0;
 const client_1 = require("@prisma/client");
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const CustomError_1 = require("../../errors/CustomError");
+const crypto_1 = __importDefault(require("crypto"));
+// Create a SHA-256 hash
+const UserAlreadyExistsError_1 = require("../../errors/UserAlreadyExistsError");
 const prisma = new client_1.PrismaClient();
 class CreateUserService {
     execute(name, password) {
@@ -24,9 +25,9 @@ class CreateUserService {
                 where: { name },
             });
             if (existingUser) {
-                throw new CustomError_1.CustomError('User already exists', 400);
+                throw new UserAlreadyExistsError_1.UserAlreadyExistsError();
             }
-            const password_hash = yield bcryptjs_1.default.hash(password, 8);
+            const password_hash = crypto_1.default.createHash('sha256').update(password).digest('hex');
             return yield prisma.user.create({
                 data: {
                     name,

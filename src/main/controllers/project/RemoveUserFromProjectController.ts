@@ -13,11 +13,8 @@ export class RemoveUserFromProjectController {
         try {
             const admin = await authenticateUserService.execute(adminName, adminPassword);
 
-            const isAdmin = await verifyAdminService.execute(admin.id, projectId);
-            if (!isAdmin) {
-                return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
-            }
-
+            await verifyAdminService.execute(admin.id, projectId);
+           
             await removeUserFromProjectService.execute(userName, projectId);
 
             res.status(200).json({ message: 'User removed from project successfully' });

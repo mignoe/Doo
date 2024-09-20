@@ -16,6 +16,12 @@ exports.app.use(userRoutes_1.userRoutes);
 exports.app.use(proejctRoutes_1.projectRoutes);
 exports.app.use(sessionRoutes_1.sessionRoutes);
 exports.app.use(taskRoutes_1.taskRoutes);
+if (process.env.container) {
+    console.log("Running inside Docker");
+}
+else {
+    console.log("Running outside Docker");
+}
 exports.app.get('/', (request, response) => {
     return response.json({ message: 'This is the Doo service! :)' });
 });

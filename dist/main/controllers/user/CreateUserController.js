@@ -16,6 +16,9 @@ class CreateUserController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, password } = request.body;
+            if (!name || !password) {
+                return response.status(500).json({ error: "Name or Password is required" });
+            }
             const createUserService = new CreateUserService_1.CreateUserService();
             try {
                 const user = yield createUserService.execute(name, password);
