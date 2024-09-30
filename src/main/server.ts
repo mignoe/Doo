@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { userRoutes } from './routes/userRoutes';
 import { projectRoutes } from './routes/proejctRoutes';
 import { taskRoutes } from './routes/taskRoutes';
 import { sessionRoutes } from './routes/sessionRoutes';
 
 export const app = express();
+app.use(cors());
 const port = 3000;
 
 app.use(express.json());
