@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VerifyProjectAdminService = void 0;
 const client_1 = require("@prisma/client");
+const UserAccessDeniedError_1 = require("../../errors/UserAccessDeniedError");
 const prisma = new client_1.PrismaClient();
 class VerifyProjectAdminService {
     execute(userId, projectId) {
@@ -23,7 +24,9 @@ class VerifyProjectAdminService {
                     },
                 },
             });
-            return project !== null;
+            if (project === null) {
+                throw new UserAccessDeniedError_1.UserAccessDeniedError();
+            }
         });
     }
 }

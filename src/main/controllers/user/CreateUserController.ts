@@ -25,6 +25,8 @@ export class CreateUserController {
                 return response.status(statusCode).json({ error: message });
             }
 
+            console.log(error);
+
             return response.status(500).json({ error: "Uknown error creating User" });
         }
     }

@@ -31,37 +31,38 @@ describe('Create Projects', () => {
     }));
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.user.deleteMany({});
-        yield prisma.project.deleteMany({});
+        yield prisma.task.deleteMany({});
         yield prisma.session.deleteMany({});
+        yield prisma.project.deleteMany({});
     }));
-    describe('/POST create project', () => {
-        it('should create the project', () => __awaiter(void 0, void 0, void 0, function* () {
-            const response = yield (0, supertest_1.default)(server)
-                .post(createProjectRoute)
-                .send({ 'name': "Project Test", "adminsNames": ["Test"], "usersNames": [], "userName": "Test", "userPassword": "123" });
-            (0, chai_1.expect)(response.body.error).equal(undefined);
-            (0, chai_1.expect)(response.status).equal(201);
-            (0, chai_1.expect)(response.body.message).equal("Project created successfully.");
-        }));
-    });
-    describe('/POST create project with empty string', () => {
-        it('should not create the project with an empty name', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server)
-                .post(createProjectRoute)
-                .send({ 'name': "", 'description': "123", "userName": "Test", "password": "123" })
-                .expect(500);
-        }));
-        it('should not create the project with an empty description', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server)
-                .post(createProjectRoute)
-                .send({ 'name': "TestProject", 'description': "", "userName": "Test", "password": "123" })
-                .expect(500);
-        }));
-    });
+    it('Should create the project', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(server)
+            .post(createProjectRoute)
+            .send({ 'name': "Project Test", "adminsNames": ["Test"], "usersNames": [], "userName": "Test", "userPassword": "123" });
+        (0, chai_1.expect)(response.body.error).equal(undefined);
+        (0, chai_1.expect)(response.status).equal(201);
+        (0, chai_1.expect)(response.body.message).equal("Project created successfully.");
+    }));
+    it('should not create the project with an empty name', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(server)
+            .post(createProjectRoute)
+            .send({ 'name': "", 'description': "123", "userName": "Test", "password": "123" })
+            .expect(500);
+    }));
+    it('should not create the project with an empty description', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(server)
+            .post(createProjectRoute)
+            .send({ 'name': "TestProject", 'description': "", "userName": "Test", "password": "123" })
+            .expect(500);
+    }));
 });
 describe('Try to add members to the Project', () => {
     let projectId;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield prisma.user.deleteMany({});
+        yield prisma.task.deleteMany({});
+        yield prisma.session.deleteMany({});
+        yield prisma.project.deleteMany({});
         yield (0, supertest_1.default)(server)
             .post('/sign-up')
             .send({ 'name': "Test", 'password': "123" })
@@ -72,22 +73,22 @@ describe('Try to add members to the Project', () => {
             .expect(201);
         const res = yield (0, supertest_1.default)(server)
             .post(createProjectRoute)
-            .send({ 'name': "TestProject", 'description': "Testing", 'userName': "Test", 'userPassword': "123" })
+            .send({ 'name': "TestProject", 'usersNames': [], 'adminsNames': ["Test"], 'userName': "Test", 'userPassword': "123" })
             .expect(201);
         projectId = res.body.id;
     }));
-    describe('/PATCH add user to project', () => {
-        it('should add the user to the project', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server)
-                .patch('/projects/addUser')
-                .send({ 'user': "Test2", 'projectId': projectId, 'adminName': "Test", 'adminPassword': "123" })
-                .expect(200);
-        }));
-        it('should not add the user to the project with wrong admin credentials', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server)
-                .patch('/projects/addUser')
-                .send({ 'user': "Test", 'projectId': projectId, 'adminName': "Test2", 'adminPassword': "123" })
-                .expect(500);
-        }));
-    });
+    it('should add the user to the project', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(server)
+            .patch('/projects/addUser')
+            .send({ 'newUserName': "Test2", 'projectId': projectId, 'adminName': "Test", 'adminPassword': "123" });
+        (0, chai_1.expect)(response.body.error).equal(undefined);
+        (0, chai_1.expect)(response.status).equal(200);
+        (0, chai_1.expect)(response.body.message).equal("User added to the project successfully.");
+    }));
+    it('should not add the user to the project with wrong admin credentials', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(server)
+            .patch('/projects/addUser')
+            .send({ 'user': "Test", 'projectId': projectId, 'adminName': "Test2", 'adminPassword': "123" })
+            .expect(500);
+    }));
 });

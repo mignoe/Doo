@@ -30,7 +30,7 @@ class CreateUserController {
                     const message = error.message;
                     return response.status(statusCode).json({ error: message });
                 }
-                return response.status(500).json({ error: "Uknown error creating User" });
+                return response.status(500).json({ error: "Uknown error creating User", message: error.message });
             }
         });
     }
