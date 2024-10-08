@@ -47,7 +47,7 @@ model Project {
 model User {
   id String @id @default(uuid())
   name String @unique
-  password String
+  password_hash String
   projects Project[] @relation("ProjectUser")
   projectAdmins Project[] @relation("ProjectAdmin")
 }
