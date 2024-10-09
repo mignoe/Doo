@@ -15,6 +15,8 @@ export class LoginUserController {
                 return response.status(200).json({message: "User logged in successfully", user: user.name, id: user.id});
 
         } catch (error : any) {
+            console.log(">> Error logging", name, password, error.message);
+
             if (error instanceof CustomError) {
                 const statusCode = error.statusCode;
                 const message = error.message;

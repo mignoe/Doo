@@ -22,6 +22,7 @@ class LoginUserController {
                 return response.status(200).json({ message: "User logged in successfully", user: user.name, id: user.id });
             }
             catch (error) {
+                console.log(">> Error logging", name, password, error.message);
                 if (error instanceof CustomError_1.CustomError) {
                     const statusCode = error.statusCode;
                     const message = error.message;
