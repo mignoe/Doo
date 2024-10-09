@@ -25,7 +25,7 @@ class GetProjectsByUserController {
             try {
                 const user = yield authenticateUserService.execute(name, password);
                 const projects = yield getProjectsByUserService.execute(user.id);
-                return response.status(200).json(projects);
+                return response.status(200).json({ "projects": projects });
             }
             catch (error) {
                 return response.status(401).json({ error: error.message });
