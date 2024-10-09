@@ -15,7 +15,11 @@ const GetProjectsByUserService_1 = require("../../services/project/GetProjectsBy
 class GetProjectsByUserController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, password } = request.body;
+            const { name, password } = request.query;
+            console.log('GetProjectsByUserController', name, password);
+            if (!name || !password || typeof name !== 'string' || typeof password !== 'string') {
+                return response.status(406).json({ error: 'Missing required fields' });
+            }
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             const getProjectsByUserService = new GetProjectsByUserService_1.GetProjectsByUserService();
             try {
