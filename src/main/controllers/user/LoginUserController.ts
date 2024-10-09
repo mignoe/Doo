@@ -12,7 +12,7 @@ export class LoginUserController {
             
             const user = await authenticateUserService.execute(name, password)
     
-                return response.status(200).json({message: "User logged in successfully", user: user.name})
+                return response.status(200).json({message: "User logged in successfully", user: user.name, id: user.id});
 
         } catch (error : any) {
             if (error instanceof CustomError) {
