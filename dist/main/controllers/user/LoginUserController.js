@@ -19,7 +19,7 @@ class LoginUserController {
             const authenticateUserService = new AuthenticateUserService_1.AuthenticateUserService();
             try {
                 const user = yield authenticateUserService.execute(name, password);
-                return response.status(200).json({ message: "User logged in successfully", user: user.name });
+                return response.status(200).json({ message: "User logged in successfully", user: user.name, id: user.id });
             }
             catch (error) {
                 if (error instanceof CustomError_1.CustomError) {

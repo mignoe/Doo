@@ -26,6 +26,7 @@ class CreateProjectController {
                 return response.status(201).json({ message: "Project created successfully.", id: project.id });
             }
             catch (error) {
+                console.error('Error creating project for user: ', userName, "with password", userPassword, error);
                 if (error instanceof CustomError_1.CustomError) {
                     const statusCode = error.statusCode;
                     const message = error.message;
