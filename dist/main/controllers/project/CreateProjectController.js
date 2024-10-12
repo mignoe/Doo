@@ -21,16 +21,18 @@ class CreateProjectController {
             const authenticatedUser = new AuthenticateUserService_1.AuthenticateUserService();
             try {
                 yield authenticatedUser.execute(userName, userPassword);
+                // console.log(name, usersNames, adminsNames, userName, userPassword);
                 const project = yield createProjectService.execute(name, usersNames, adminsNames);
-                return response.status(201).json({ message: "Project created successfully." });
+                return response.status(201).json({ message: "Project created successfully.", id: project.id });
             }
             catch (error) {
+                console.error('Error creating project for user: ', userName, "with password", userPassword, error);
                 if (error instanceof CustomError_1.CustomError) {
                     const statusCode = error.statusCode;
                     const message = error.message;
                     return response.status(statusCode).json({ error: message });
                 }
-                return response.status(500).json({ error: 'Unknown error creating project' });
+                return response.status(500).json({ error: 'Unknown error creating project', message: error.message });
             }
         });
     }

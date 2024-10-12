@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { CreateProjectService } from '../../services/project/CreateProjectService';
 import { CustomError } from '../../errors/CustomError';
 import { AuthenticateUserService } from '../../services/user/AuthenticateUserService';
+import { use } from 'chai';
 
 
 export class CreateProjectController {
@@ -20,6 +21,8 @@ export class CreateProjectController {
 
             return response.status(201).json({message: "Project created successfully.", id: project.id});
         } catch (error : any) {
+
+            console.error('Error creating project for user: ', userName, "with password", userPassword, error);            
             
             if (error instanceof CustomError) {
                 const statusCode = error.statusCode;

@@ -21,15 +21,13 @@ class AddUserToProjectController {
             const verifyAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
             try {
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
-                const isAdmin = yield verifyAdminService.execute(admin.id, projectId);
-                if (!isAdmin) {
-                    return res.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
-                }
+                yield verifyAdminService.execute(admin.id, projectId);
                 const addUserToProjectService = new AddUserToProjectService_1.AddUserToProjectService();
                 yield addUserToProjectService.execute(newUserName, projectId);
-                res.status(200).json({ message: 'User added to project successfully' });
+                res.status(200).json({ message: 'User added to the project successfully.' });
             }
             catch (error) {
+                console.log("Error trying to add user to proejct for user:", adminName, "\n", error);
                 res.status(500).json({ error: error.message });
             }
         });

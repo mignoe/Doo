@@ -23,13 +23,15 @@ const server = server_1.app;
 describe('Users', () => {
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.user.deleteMany({});
-        yield prisma.project.deleteMany({});
+        yield prisma.task.deleteMany({});
         yield prisma.session.deleteMany({});
+        yield prisma.project.deleteMany({});
     }));
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.user.deleteMany({});
-        yield prisma.project.deleteMany({});
+        yield prisma.task.deleteMany({});
         yield prisma.session.deleteMany({});
+        yield prisma.project.deleteMany({});
     }));
     // Sign-up user tests
     describe('/POST sign-up', () => {

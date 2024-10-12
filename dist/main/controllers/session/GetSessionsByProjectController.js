@@ -14,7 +14,10 @@ const GetSessionsByProjectService_1 = require("../../services/session/GetSession
 class GetSessionsByProjectController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { projectId } = request.params;
+            const { projectId } = request.query;
+            if (!projectId || typeof projectId !== 'string') {
+                return response.status(400).json({ error: 'Missing projectId' });
+            }
             const getSessionsByProjectService = new GetSessionsByProjectService_1.GetSessionsByProjectService();
             try {
                 const sessions = yield getSessionsByProjectService.execute(projectId);

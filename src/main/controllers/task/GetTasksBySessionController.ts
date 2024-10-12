@@ -4,7 +4,11 @@ import { GetTasksBySessionService } from '../../services/task/GetTasksBySessionS
 
 export class GetTasksBySessionController {
     async handle(request: Request, response: Response) {
-        const { sessionId } = request.body;
+        const { sessionId } = request.query;
+        if (typeof sessionId !== 'string') {
+            return response.status(400).json({ error: 'Invalid sessionId' });
+        }
+
         const getTasksBySessionService = new GetTasksBySessionService();
 
         try {

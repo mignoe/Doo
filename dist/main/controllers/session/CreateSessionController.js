@@ -13,6 +13,7 @@ exports.CreateSessionController = void 0;
 const AuthenticateUserService_1 = require("../../services/user/AuthenticateUserService");
 const VerifyProjectAdminService_1 = require("../../services/project/VerifyProjectAdminService");
 const CreateSessionService_1 = require("../../services/session/CreateSessionService");
+const CustomError_1 = require("../../errors/CustomError");
 class CreateSessionController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -21,18 +22,21 @@ class CreateSessionController {
             const verifyProjectAdminService = new VerifyProjectAdminService_1.VerifyProjectAdminService();
             const createSessionService = new CreateSessionService_1.CreateSessionService();
             try {
+                // throw new Error([projectId, sessionName].join(' '));
                 // Authenticate the user
                 const admin = yield authenticateUserService.execute(adminName, adminPassword);
                 // Verify if the user is an admin of the project
-                const isAdmin = yield verifyProjectAdminService.execute(admin.id, projectId);
-                if (!isAdmin) {
-                    return response.status(403).json({ error: 'Either the projectId is wrong or you are not an admin from this project' });
-                }
+                yield verifyProjectAdminService.execute(admin.id, projectId);
                 const session = yield createSessionService.execute(projectId, sessionName);
-                return response.status(200).json(session);
+                return response.status(201).json({ message: 'Session created successfully.', id: session.id });
             }
             catch (error) {
-                return response.status(500).json({ error: 'Failed to create session' });
+                if (error instanceof CustomError_1.CustomError) {
+                    const statusCode = error.statusCode;
+                    const message = error.message;
+                    return response.status(statusCode).json({ error: message });
+                }
+                return response.status(500).json({ /*error: 'Failed to create session'*/ error: error.message });
             }
         });
     }

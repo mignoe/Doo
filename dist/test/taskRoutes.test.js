@@ -31,43 +31,42 @@ describe('Create tasks', () => {
             .send({ name: "Test2", password: "123" })
             .expect(201);
         // Create project
-        const projectRes = yield (0, supertest_1.default)(server_1.app)
+        const res = yield (0, supertest_1.default)(server_1.app)
             .post('/projects/create')
-            .send({ name: "TestProject", description: "Testing", userName: "Test", userPassword: "123" })
+            .send({ 'name': "TestProject", 'usersNames': [], 'adminsNames': ["Test"], 'userName': "Test", 'userPassword': "123" })
             .expect(201);
-        projectId = projectRes.body.id;
+        projectId = res.body.id;
         // Create session
         const sessionRes = yield (0, supertest_1.default)(server_1.app)
             .post('/sessions/create')
-            .send({ name: "Session Test", projectId, userName: "Test", password: "123" })
+            .send({ 'sessionName': "Session Test", "projectId": projectId, "adminName": "Test", "adminPassword": "123" })
             .expect(201);
         sessionId = sessionRes.body.id;
     }));
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield prisma.user.deleteMany({});
-        yield prisma.project.deleteMany({});
+        yield prisma.task.deleteMany({});
         yield prisma.session.deleteMany({});
+        yield prisma.project.deleteMany({});
     }));
-    describe('/POST create task', () => {
-        it('should create the task', () => __awaiter(void 0, void 0, void 0, function* () {
-            const response = yield (0, supertest_1.default)(server_1.app)
-                .post('/tasks/create')
-                .send({ name: "Task Test", "sessionId": sessionId, userName: "Test", password: "123" });
-            (0, chai_1.expect)(response.body.error).equal(undefined);
-            (0, chai_1.expect)(response.status).equal(201);
-            (0, chai_1.expect)(response.body.message).equal("Task created successfully.");
-        }));
-        it('should not create the task with missing name', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server_1.app)
-                .post('/tasks/create')
-                .send({ name: "", sessionId, userName: "Test", password: "123" })
-                .expect(500);
-        }));
-        it('should not create the task with invalid sessionId', () => __awaiter(void 0, void 0, void 0, function* () {
-            yield (0, supertest_1.default)(server_1.app)
-                .post('/tasks/create')
-                .send({ name: "Task Test", sessionId: "<invalid>", userName: "Test", password: "123" })
-                .expect(500);
-        }));
-    });
+    it('should create the task', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(server_1.app)
+            .post('/tasks/create')
+            .send({ taskName: "Task Test", taskContent: "test content", "sessionId": sessionId, userName: "Test", userPassword: "123" });
+        (0, chai_1.expect)(response.body.error).equal(undefined);
+        (0, chai_1.expect)(response.status).equal(201);
+        (0, chai_1.expect)(response.body.message).equal("Task created successfully.");
+    }));
+    it('should not create the task with missing name', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(server_1.app)
+            .post('/tasks/create')
+            .send({ name: "", sessionId, userName: "Test", password: "123" })
+            .expect(500);
+    }));
+    it('should not create the task with invalid sessionId', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, supertest_1.default)(server_1.app)
+            .post('/tasks/create')
+            .send({ name: "Task Test", sessionId: "<invalid>", userName: "Test", password: "123" })
+            .expect(500);
+    }));
 });

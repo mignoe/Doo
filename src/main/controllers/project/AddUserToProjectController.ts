@@ -22,6 +22,8 @@ export class AddUserToProjectController {
 
             res.status(200).json({ message: 'User added to the project successfully.' });
         } catch (error : any) {
+            console.log("Error trying to add user to proejct for user:", adminName, "\n", error)
+
             res.status(500).json({ error: error.message });
         }
     }

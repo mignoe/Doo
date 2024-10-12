@@ -11,15 +11,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddUserToProjectService = void 0;
 const client_1 = require("@prisma/client");
+const CustomError_1 = require("../../errors/CustomError");
 const prisma = new client_1.PrismaClient();
 class AddUserToProjectService {
     execute(newUserName, projectId) {
         return __awaiter(this, void 0, void 0, function* () {
+            const name = newUserName;
+            if (!name) {
+                throw new Error("The new user name must be provided");
+            }
+            if (!projectId) {
+                throw new Error("The project ID must be provided");
+            }
             const user = yield prisma.user.findUnique({
-                where: { name: newUserName },
+                where: { name: name },
             });
             if (!user) {
-                throw new Error('User not found');
+                throw new CustomError_1.CustomError('User not found', 404);
             }
             return yield prisma.project.update({
                 where: { id: projectId },

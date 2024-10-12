@@ -33,7 +33,7 @@ class CreateTaskController {
                 }
                 // Create a new task
                 const newTask = yield createTaskService.execute(sessionId, taskName, taskContent);
-                return response.status(200).json(newTask);
+                return response.status(201).json({ id: newTask.id, message: 'Task created successfully.' });
             }
             catch (error) {
                 return response.status(500).json({ error: error.message });

@@ -4,7 +4,11 @@ import { GetSessionsByProjectService } from '../../services/session/GetSessionsB
 
 export class GetSessionsByProjectController {
     async handle(request: Request, response: Response) {
-        const { projectId } = request.params;
+        const { projectId } = request.query;
+        if (!projectId || typeof projectId !== 'string') {
+            return response.status(400).json({ error: 'Missing projectId' });
+        }
+
         const getSessionsByProjectService = new GetSessionsByProjectService();
 
         try {
